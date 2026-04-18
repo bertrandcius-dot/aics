@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI Copyright Shield ⊗ — Protect. Meter. Earn.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#07090f;
+  --surface:#0d1018;
+  --surface2:#131720;
+  --surface3:#1a2030;
+  --cyan:#00e5ff;
+  --cyan-dim:#00b8cc;
+  --amber:#ffaa00;
+  --amber-dim:#cc8800;
+  --red:#ff3b5c;
+  --green:#00d68f;
+  --border:#1e2840;
+  --border2:#2a3555;
+  --text:#e8edf8;
+  --text2:#8892aa;
+  --text3:#4a5570;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:64px;border-bottom:1px solid var(--border);background:rgba(7,9,15,.92);backdrop-filter:blur(12px)}
+.nav-logo{display:flex;align-items:center;gap:10px;font-family:'Bebas Neue',cursive;font-size:22px;letter-spacing:2px;color:var(--text)}
+.sym-circle{width:30px;height:30px;border-radius:50%;background:var(--cyan);color:var(--bg);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:900;font-family:'Bebas Neue',cursive;flex-shrink:0}
+.nav-links{display:flex;gap:32px;font-size:13px;font-weight:500;color:var(--text2)}
+.nav-links a{text-decoration:none;color:inherit;transition:color .2s;cursor:pointer}.nav-links a:hover{color:var(--cyan)}
+.nav-btns{display:flex;gap:10px}
+.btn-ghost{background:transparent;border:1px solid var(--border2);color:var(--text2);padding:8px 18px;border-radius:6px;font-size:13px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s}
+.btn-ghost:hover{border-color:var(--cyan);color:var(--cyan)}
+.btn-cyan{background:var(--cyan);border:none;color:var(--bg);padding:8px 20px;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s}
+.btn-cyan:hover{background:#33eeff;transform:translateY(-1px)}
+
+/* ── PAGE SECTIONS ── */
+#landing{display:block}
+#dashboard{display:none}
+
+/* ═══════════════════════════
+   LANDING PAGE
+═══════════════════════════ */
+
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:100px 40px 60px;position:relative;overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:1fr 480px;gap:80px;align-items:center;max-width:1200px;margin:0 auto;width:100%}
+
+/* animated grid bg */
+.hero::before{content:'';position:absolute;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:60px 60px;opacity:.35;pointer-events:none}
+.hero::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 60% at 70% 50%,rgba(0,229,255,.06) 0%,transparent 70%);pointer-events:none}
+
+.hero-eyebrow{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--cyan);margin-bottom:20px;display:flex;align-items:center;gap:10px}
+.hero-eyebrow::before{content:'';width:28px;height:1px;background:var(--cyan)}
+.hero-h1{font-family:'Bebas Neue',cursive;font-size:clamp(64px,7vw,96px);line-height:.95;letter-spacing:2px;color:var(--text);margin-bottom:12px}
+.hero-h1 span{color:var(--cyan)}
+.hero-sub{font-size:17px;color:var(--text2);line-height:1.75;max-width:500px;margin-bottom:36px;font-weight:300}
+.hero-ctas{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:48px}
+.btn-large-cyan{background:var(--cyan);border:none;color:var(--bg);padding:14px 32px;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;display:flex;align-items:center;gap:8px}
+.btn-large-cyan:hover{background:#33eeff;transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,229,255,.25)}
+.btn-large-ghost{background:transparent;border:1px solid var(--border2);color:var(--text);padding:14px 32px;border-radius:8px;font-size:15px;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s}
+.btn-large-ghost:hover{border-color:var(--text2);transform:translateY(-2px)}
+.hero-stats{display:flex;gap:40px}
+.h-stat-val{font-family:'Bebas Neue',cursive;font-size:36px;letter-spacing:1px;color:var(--text)}
+.h-stat-val span{color:var(--cyan)}
+.h-stat-lbl{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.12em;font-family:'DM Mono',monospace;margin-top:2px}
+
+/* THREAT GLOBE CARD */
+.globe-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px;position:relative;overflow:hidden}
+.globe-card::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 60% 40%,rgba(0,229,255,.05) 0%,transparent 65%);pointer-events:none}
+.globe-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.globe-title{font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.15em;color:var(--text2)}
+.live-pill{display:flex;align-items:center;gap:5px;background:rgba(0,214,143,.12);border:1px solid rgba(0,214,143,.3);border-radius:100px;padding:3px 10px;font-family:'DM Mono',monospace;font-size:10px;color:var(--green)}
+.pulse-dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 1.5s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.8)}}
+
+/* Canvas world map */
+canvas#globe{display:block;width:100%;height:220px;border-radius:8px}
+
+.event-feed{margin-top:16px;display:flex;flex-direction:column;gap:6px;max-height:160px;overflow:hidden}
+.ev{display:flex;align-items:center;gap:10px;padding:8px 10px;background:var(--surface2);border-radius:8px;border:1px solid var(--border);animation:slideUp .4s ease both}
+@keyframes slideUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.ev-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.ev-dot.red{background:var(--red);box-shadow:0 0 6px var(--red)}
+.ev-dot.amber{background:var(--amber);box-shadow:0 0 6px var(--amber)}
+.ev-dot.cyan{background:var(--cyan);box-shadow:0 0 6px var(--cyan)}
+.ev-info{flex:1}
+.ev-name{font-size:11px;font-weight:600;color:var(--text)}
+.ev-sub{font-family:'DM Mono',monospace;font-size:9px;color:var(--text3)}
+.ev-amt{font-family:'DM Mono',monospace;font-size:11px;font-weight:500;color:var(--green)}
+.ev-amt.neg{color:var(--red)}
+
+/* ── TICKER ── */
+.ticker-wrap{border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:10px 0;overflow:hidden;background:var(--surface)}
+.ticker{display:flex;gap:60px;animation:ticker 25s linear infinite;white-space:nowrap}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.tick-item{font-family:'DM Mono',monospace;font-size:11px;color:var(--text3);display:flex;align-items:center;gap:8px;flex-shrink:0}
+.tick-item b{color:var(--cyan)}
+.tick-sep{color:var(--border2)}
+
+/* ── HOW IT WORKS ── */
+.section{max-width:1200px;margin:0 auto;padding:100px 40px}
+.sec-label{font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.18em;color:var(--cyan);margin-bottom:48px;display:flex;align-items:center;gap:12px}
+.sec-label::after{content:'';flex:1;height:1px;background:var(--border)}
+.sec-h2{font-family:'Bebas Neue',cursive;font-size:clamp(40px,5vw,60px);letter-spacing:2px;margin-bottom:16px}
+.sec-sub{font-size:16px;color:var(--text2);max-width:560px;line-height:1.7;font-weight:300;margin-bottom:60px}
+
+.steps-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.step-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:28px;position:relative;overflow:hidden;transition:all .25s;cursor:default}
+.step-card:hover{border-color:var(--border2);transform:translateY(-4px);box-shadow:0 16px 48px rgba(0,0,0,.4)}
+.step-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--cyan);opacity:0;transition:opacity .25s}
+.step-card:hover::before{opacity:1}
+.step-num{font-family:'Bebas Neue',cursive;font-size:48px;color:var(--border2);line-height:1;margin-bottom:16px}
+.step-icon{width:40px;height:40px;border-radius:10px;background:rgba(0,229,255,.1);display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:16px}
+.step-title{font-size:16px;font-weight:700;margin-bottom:8px;color:var(--text)}
+.step-body{font-size:13px;color:var(--text2);line-height:1.65;font-weight:300}
+
+/* ── COMPARISON TABLE ── */
+.compare-section{background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:100px 40px}
+.compare-inner{max-width:1000px;margin:0 auto}
+.compare-table{width:100%;border-collapse:collapse;margin-top:40px}
+.compare-table th{text-align:left;padding:14px 20px;font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:var(--text3);border-bottom:1px solid var(--border)}
+.compare-table th:first-child{width:200px}
+.compare-table td{padding:14px 20px;font-size:13px;border-bottom:1px solid var(--border);color:var(--text2)}
+.compare-table td:first-child{font-weight:600;color:var(--text);font-size:13px}
+.compare-table tr:last-child td{border-bottom:none}
+.compare-table tr.highlight td{background:rgba(0,229,255,.04)}
+.compare-table tr.highlight td:first-child{color:var(--cyan)}
+.check{color:var(--green);font-size:15px}
+.cross{color:var(--red);font-size:15px}
+.partial{color:var(--amber);font-size:13px}
+
+/* ── PRICING ── */
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:60px}
+.plan{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:32px;transition:all .2s}
+.plan:hover{transform:translateY(-4px);box-shadow:0 20px 60px rgba(0,0,0,.4)}
+.plan.featured{background:var(--surface2);border-color:var(--cyan);position:relative}
+.plan.featured::before{content:'MOST POPULAR';position:absolute;top:-1px;left:50%;transform:translateX(-50%);background:var(--cyan);color:var(--bg);font-family:'DM Mono',monospace;font-size:9px;font-weight:600;letter-spacing:.15em;padding:4px 16px;border-radius:0 0 8px 8px}
+.plan-tier{font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.15em;color:var(--text3);margin-bottom:16px}
+.plan-featured .plan-tier{color:var(--cyan)}
+.plan-price{font-family:'Bebas Neue',cursive;font-size:54px;letter-spacing:1px;line-height:1;color:var(--text);margin-bottom:4px}
+.plan-price span{font-size:20px;color:var(--text3)}
+.plan-tagline{font-size:13px;color:var(--text2);margin-bottom:24px;font-weight:300;line-height:1.5}
+.plan-divider{height:1px;background:var(--border);margin:20px 0}
+.plan-feature{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:var(--text2);margin-bottom:10px;line-height:1.5}
+.plan-feature .dot{width:5px;height:5px;border-radius:50%;background:var(--cyan);flex-shrink:0;margin-top:6px}
+.plan-btn{width:100%;padding:13px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;margin-top:24px;transition:all .2s;border:1px solid var(--border2);background:transparent;color:var(--text)}
+.plan-btn:hover{border-color:var(--cyan);color:var(--cyan)}
+.plan.featured .plan-btn{background:var(--cyan);color:var(--bg);border-color:var(--cyan)}
+.plan.featured .plan-btn:hover{background:#33eeff}
+
+/* ── BADGE DEMO ── */
+.badge-demo{max-width:1200px;margin:0 auto;padding:0 40px 100px}
+.badge-demo-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:60px;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;position:relative;overflow:hidden}
+.badge-demo-card::before{content:'';position:absolute;right:-100px;top:-100px;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(0,229,255,.06) 0%,transparent 70%);pointer-events:none}
+.badge-demo-card h2{font-family:'Bebas Neue',cursive;font-size:46px;letter-spacing:2px;line-height:1.05;margin-bottom:16px}
+.badge-demo-card h2 span{color:var(--cyan)}
+.badge-demo-card p{font-size:14px;color:var(--text2);line-height:1.75;margin-bottom:28px;font-weight:300}
+.code-box{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:20px;font-family:'DM Mono',monospace;font-size:12px;line-height:1.9;color:rgba(255,255,255,.6)}
+.ct{color:#7ec8a4}.ca{color:#7ab8d4}.cv{color:#d4c07a}.cc{color:#888}
+.website-mockup{background:var(--surface2);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.mock-bar{display:flex;align-items:center;gap:8px;padding:10px 16px;border-bottom:1px solid var(--border);background:var(--bg)}
+.mock-dots{display:flex;gap:5px}
+.mock-dot{width:10px;height:10px;border-radius:50%}
+.mock-url{flex:1;background:var(--surface);border-radius:4px;height:24px;margin:0 12px}
+.mock-body{padding:24px}
+.mock-p{height:8px;background:var(--border);border-radius:4px;margin-bottom:10px}
+.mock-p.short{width:60%}
+.mock-p.med{width:80%}
+.mock-footer{border-top:1px solid var(--border);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;margin-top:10px}
+.mock-copy{font-size:10px;font-family:'DM Mono',monospace;color:var(--text3)}
+.aics-badge-demo{display:flex;align-items:center;gap:6px;background:rgba(0,229,255,.08);border:1px solid rgba(0,229,255,.25);border-radius:100px;padding:5px 12px;animation:glow 2.5s ease-in-out infinite}
+@keyframes glow{0%,100%{box-shadow:0 0 0 rgba(0,229,255,0)}50%{box-shadow:0 0 16px rgba(0,229,255,.2)}}
+.aics-sym-sm{width:16px;height:16px;border-radius:50%;background:var(--cyan);color:var(--bg);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:900;font-family:'Bebas Neue',cursive}
+.aics-label{font-family:'DM Mono',monospace;font-size:9px;color:var(--cyan)}
+
+/* ── FOOTER ── */
+footer{border-top:1px solid var(--border);padding:32px 40px;display:flex;align-items:center;justify-content:space-between;max-width:100%}
+.foot-left{font-family:'DM Mono',monospace;font-size:11px;color:var(--text3)}
+.foot-badge{display:flex;align-items:center;gap:7px;font-family:'DM Mono',monospace;font-size:11px;color:var(--text3)}
+
+/* ═══════════════════════════
+   DASHBOARD
+═══════════════════════════ */
+.dash-layout{display:grid;grid-template-columns:220px 1fr;min-height:100vh;padding-top:64px}
+
+/* SIDEBAR */
+.sidebar{background:var(--surface);border-right:1px solid var(--border);padding:28px 0;position:sticky;top:64px;height:calc(100vh - 64px);overflow-y:auto}
+.sb-section{padding:0 16px;margin-bottom:24px}
+.sb-label{font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.15em;color:var(--text3);padding:0 12px;margin-bottom:8px}
+.sb-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:13px;font-weight:500;color:var(--text2);cursor:pointer;transition:all .15s;margin-bottom:2px}
+.sb-item:hover{background:var(--surface2);color:var(--text)}
+.sb-item.active{background:rgba(0,229,255,.1);color:var(--cyan);border:1px solid rgba(0,229,255,.2)}
+.sb-icon{font-size:15px;width:20px;text-align:center}
+.sb-domain{padding:16px;margin:0 12px 16px;background:var(--surface2);border:1px solid var(--border);border-radius:10px}
+.sb-domain-url{font-family:'DM Mono',monospace;font-size:11px;color:var(--text2);margin-bottom:6px}
+.sb-domain-id{font-family:'DM Mono',monospace;font-size:9px;color:var(--cyan)}
+.sb-status{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--green);margin-top:6px}
+
+/* MAIN */
+.dash-main{padding:32px 36px;background:var(--bg);overflow-y:auto}
+.dash-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:32px}
+.dash-title{font-family:'Bebas Neue',cursive;font-size:32px;letter-spacing:2px;color:var(--text)}
+.dash-date{font-family:'DM Mono',monospace;font-size:11px;color:var(--text3)}
+.dash-actions{display:flex;gap:10px}
+
+/* KPI ROW */
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px}
+.kpi{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px;position:relative;overflow:hidden}
+.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.kpi.cyan::before{background:var(--cyan)}
+.kpi.amber::before{background:var(--amber)}
+.kpi.red::before{background:var(--red)}
+.kpi.green::before{background:var(--green)}
+.kpi-label{font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.12em;color:var(--text3);margin-bottom:10px}
+.kpi-val{font-family:'Bebas Neue',cursive;font-size:38px;letter-spacing:1px;line-height:1;margin-bottom:6px}
+.kpi.cyan .kpi-val{color:var(--cyan)}
+.kpi.amber .kpi-val{color:var(--amber)}
+.kpi.red .kpi-val{color:var(--red)}
+.kpi.green .kpi-val{color:var(--green)}
+.kpi-delta{font-size:11px;color:var(--text3);display:flex;align-items:center;gap:4px}
+.delta-up{color:var(--green)}.delta-dn{color:var(--red)}
+
+/* CHARTS ROW */
+.charts-row{display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-bottom:28px}
+.chart-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px}
+.chart-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.chart-title{font-size:13px;font-weight:600;color:var(--text)}
+.chart-sub{font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);margin-top:2px}
+.chart-legend{display:flex;gap:14px}
+.leg-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text3)}
+.leg-dot{width:8px;height:8px;border-radius:2px}
+
+/* Bar chart */
+.bar-chart{display:flex;align-items:flex-end;gap:6px;height:120px;padding-top:8px}
+.bar-group{display:flex;flex-direction:column;align-items:center;gap:4px;flex:1}
+.bar-wrap{display:flex;align-items:flex-end;gap:2px;height:100%}
+.bar{border-radius:3px 3px 0 0;transition:opacity .2s;cursor:default}
+.bar:hover{opacity:.8}
+.bar-label{font-family:'DM Mono',monospace;font-size:8px;color:var(--text3)}
+
+/* Donut chart */
+.donut-wrap{display:flex;align-items:center;gap:20px}
+canvas#donut{width:120px;height:120px;flex-shrink:0}
+.donut-legend{display:flex;flex-direction:column;gap:8px}
+.donut-leg{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text2)}
+.donut-leg-dot{width:10px;height:10px;border-radius:3px;flex-shrink:0}
+.donut-leg-pct{font-family:'DM Mono',monospace;font-size:11px;color:var(--text3);margin-left:auto}
+
+/* BOTTOM ROW */
+.bottom-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+
+/* Events table */
+.table-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.table-card-head{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.table-card-title{font-size:13px;font-weight:600;color:var(--text)}
+.badge-count{background:var(--surface2);border:1px solid var(--border);border-radius:100px;font-family:'DM Mono',monospace;font-size:10px;color:var(--text2);padding:2px 10px}
+table.ev-table{width:100%;border-collapse:collapse}
+table.ev-table th{font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:var(--text3);padding:10px 16px;text-align:left;border-bottom:1px solid var(--border);background:var(--surface2)}
+table.ev-table td{padding:11px 16px;font-size:12px;color:var(--text2);border-bottom:1px solid var(--border)}
+table.ev-table tr:last-child td{border-bottom:none}
+table.ev-table tr:hover td{background:rgba(255,255,255,.02)}
+.status-pill{font-family:'DM Mono',monospace;font-size:9px;padding:3px 9px;border-radius:100px;font-weight:500}
+.status-pill.blocked{background:rgba(255,59,92,.1);color:var(--red);border:1px solid rgba(255,59,92,.25)}
+.status-pill.billed{background:rgba(0,214,143,.1);color:var(--green);border:1px solid rgba(0,214,143,.25)}
+.status-pill.pending{background:rgba(255,170,0,.1);color:var(--amber);border:1px solid rgba(255,170,0,.25)}
+
+/* Revenue breakdown */
+.rev-list{padding:0}
+.rev-item{padding:14px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px}
+.rev-item:last-child{border-bottom:none}
+.rev-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.rev-name{font-size:13px;font-weight:600;color:var(--text)}
+.rev-pages{font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);margin-top:2px}
+.rev-bar-wrap{flex:1;height:4px;background:var(--border);border-radius:2px;overflow:hidden}
+.rev-bar{height:100%;border-radius:2px;transition:width 1.2s ease}
+.rev-amt{font-family:'DM Mono',monospace;font-size:13px;font-weight:500;color:var(--green);margin-left:12px;white-space:nowrap}
+
+/* FADE IN ANIMATIONS */
+@keyframes fadeIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.hero-left>*{animation:fadeIn .7s ease both}
+.hero-left>*:nth-child(1){animation-delay:.05s}
+.hero-left>*:nth-child(2){animation-delay:.15s}
+.hero-left>*:nth-child(3){animation-delay:.25s}
+.hero-left>*:nth-child(4){animation-delay:.35s}
+.hero-left>*:nth-child(5){animation-delay:.45s}
+.hero-right{animation:fadeIn .9s ease .2s both}
+.kpi{animation:fadeIn .5s ease both}
+.kpi:nth-child(1){animation-delay:.05s}.kpi:nth-child(2){animation-delay:.1s}.kpi:nth-child(3){animation-delay:.15s}.kpi:nth-child(4){animation-delay:.2s}
+
+@media(max-width:960px){.hero-grid{grid-template-columns:1fr}.hero-right{display:none}.steps-grid{grid-template-columns:1fr 1fr}.pricing-grid{grid-template-columns:1fr}.badge-demo-card{grid-template-columns:1fr}.charts-row{grid-template-columns:1fr}.bottom-row{grid-template-columns:1fr}.dash-layout{grid-template-columns:1fr}.sidebar{display:none}.kpi-row{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <div class="sym-circle">⊗</div>
+    AICS
+  </div>
+  <div class="nav-links">
+    <a onclick="showLanding()">Product</a>
+    <a>Registry</a>
+    <a>Docs</a>
+    <a>Legal</a>
+  </div>
+  <div class="nav-btns">
+    <button class="btn-ghost" onclick="showLanding()">Home</button>
+    <button class="btn-cyan" onclick="showDashboard()">Open Dashboard →</button>
+  </div>
+</nav>
+
+<!-- ════════════════════════════
+     LANDING PAGE
+════════════════════════════ -->
+<div id="landing">
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid">
+    <div class="hero-left">
+      <div class="hero-eyebrow">AI Content Rights · Est. 2026</div>
+      <h1 class="hero-h1">YOUR CONTENT.<br>YOUR RIGHTS.<br><span>THEIR BILL.</span></h1>
+      <p class="hero-sub">The world's first metered licensing infrastructure for AI training data. Detect every LLM crawler, charge per token, and display the ⊗ symbol that makes your website legally protected.</p>
+      <div class="hero-ctas">
+        <button class="btn-large-cyan" onclick="showDashboard()">Open Live Dashboard →</button>
+        <button class="btn-large-ghost">Read the Docs</button>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="h-stat-val"><span id="s1">0</span>M+</div>
+          <div class="h-stat-lbl">Tokens metered today</div>
+        </div>
+        <div>
+          <div class="h-stat-val">$<span id="s2">0</span>K</div>
+          <div class="h-stat-lbl">Earned by owners</div>
+        </div>
+        <div>
+          <div class="h-stat-val"><span id="s3">0</span>K</div>
+          <div class="h-stat-lbl">Domains protected</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="globe-card">
+        <div class="globe-header">
+          <div class="globe-title">Live Threat Monitor</div>
+          <div class="live-pill"><div class="pulse-dot"></div> LIVE</div>
+        </div>
+        <canvas id="globe" width="420" height="220"></canvas>
+        <div class="event-feed" id="eventFeed">
+          <div class="ev"><div class="ev-dot red"></div><div class="ev-info"><div class="ev-name">GPTBot/4.0 — BLOCKED</div><div class="ev-sub">techcrunch.io · 38 pages · 52k tokens · 1s ago</div></div><div class="ev-amt">+$52.00</div></div>
+          <div class="ev"><div class="ev-dot cyan"></div><div class="ev-info"><div class="ev-name">ClaudeBot/1.0 — BILLED</div><div class="ev-sub">lawfirm.com · 12 pages · 18k tokens · 4s ago</div></div><div class="ev-amt">+$18.00</div></div>
+          <div class="ev"><div class="ev-dot amber"></div><div class="ev-info"><div class="ev-name">Unknown Crawler — PENDING</div><div class="ev-sub">Fingerprint match in progress · Honeypot triggered</div></div><div class="ev-amt neg">ID'ing...</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker">
+    <span class="tick-item">⊗ GPTBot blocked <b>+$48.20</b></span><span class="tick-sep">·</span>
+    <span class="tick-item">⊗ ClaudeBot metered <b>186k tokens</b></span><span class="tick-sep">·</span>
+    <span class="tick-item">⊗ Meta-ExternalAgent blocked <b>+$91.00</b></span><span class="tick-sep">·</span>
+    <span class="tick-item">⊗ New domain registered <b>legalnews.io</b></span><span class="tick-sep">·</span>
+    <span class="tick-item">⊗ Gemini-Extended metered <b>+$29.40</b></span><span class="tick-sep">·</span>
+    <span class="tick-item">⊗ PerplexityBot blocked <b>+$37.80</b></span><span class="tick-sep">·</span>
+    <span class="tick-item">⊗ Apple-Applebot billed <b>+$14.50</b></span><span class="tick-sep">·</span>
+    <span class="tick-item">⊗ GPTBot blocked <b>+$48.20</b></span><span class="tick-sep">·</span>
+    <span class="tick-item">⊗ ClaudeBot metered <b>186k tokens</b></span><span class="tick-sep">·</span>
+    <span class="tick-item">⊗ Meta-ExternalAgent blocked <b>+$91.00</b></span><span class="tick-sep">·</span>
+    <span class="tick-item">⊗ New domain registered <b>legalnews.io</b></span><span class="tick-sep">·</span>
+    <span class="tick-item">⊗ Gemini-Extended metered <b>+$29.40</b></span><span class="tick-sep">·</span>
+    <span class="tick-item">⊗ PerplexityBot blocked <b>+$37.80</b></span><span class="tick-sep">·</span>
+    <span class="tick-item">⊗ Apple-Applebot billed <b>+$14.50</b></span>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<div class="section">
+  <div class="sec-label">How it works</div>
+  <h2 class="sec-h2">FOUR STEPS TO<br>PROTECTED REVENUE</h2>
+  <p class="sec-sub">From installation to first payout in under 60 seconds. No server changes required.</p>
+  <div class="steps-grid">
+    <div class="step-card">
+      <div class="step-num">01</div>
+      <div class="step-icon">🔍</div>
+      <div class="step-title">Detect</div>
+      <div class="step-body">Fingerprint every AI crawler — GPTBot, ClaudeBot, Gemini, Meta-ExternalAgent — via user-agent analysis, behavioral heuristics, and embedded honeypot traps. Zero bots missed.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">02</div>
+      <div class="step-icon">⚡</div>
+      <div class="step-title">Meter</div>
+      <div class="step-body">Count tokens scraped from every page in real time. Log timestamps, crawler identity, pages accessed, and estimated training data volume with immutable audit records.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">03</div>
+      <div class="step-icon">💳</div>
+      <div class="step-title">Bill</div>
+      <div class="step-body">Charge AI companies per 1,000 tokens or per page via our Compliance API. Compliant crawlers pay before accessing. Non-compliant crawlers are blocked and invoiced via legal counsel.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">04</div>
+      <div class="step-icon">⊗</div>
+      <div class="step-title">Earn</div>
+      <div class="step-body">80–85% of all scraping fees flow directly to your account monthly. The ⊗ badge in your footer signals machine-readable protection to every crawler on the internet.</div>
+    </div>
+  </div>
+</div>
+
+<!-- COMPARE TABLE -->
+<div class="compare-section">
+  <div class="compare-inner">
+    <div class="sec-label">Competitive landscape</div>
+    <h2 class="sec-h2" style="font-size:40px">WHY NOTHING ELSE<br>COMES CLOSE</h2>
+    <table class="compare-table">
+      <thead><tr><th>Tool</th><th>Detects AI Bots</th><th>Meters Tokens</th><th>Bills & Collects</th><th>Legal Layer</th><th>Protection Symbol</th></tr></thead>
+      <tbody>
+        <tr><td>robots.txt</td><td><span class="partial">⚠ Voluntary</span></td><td><span class="cross">✕</span></td><td><span class="cross">✕</span></td><td><span class="cross">✕</span></td><td><span class="cross">✕</span></td></tr>
+        <tr><td>Cloudflare WAF</td><td><span class="check">✓</span></td><td><span class="cross">✕</span></td><td><span class="cross">✕</span></td><td><span class="cross">✕</span></td><td><span class="cross">✕</span></td></tr>
+        <tr><td>TDMRep Standard</td><td><span class="partial">⚠ Partial</span></td><td><span class="cross">✕</span></td><td><span class="cross">✕</span></td><td><span class="partial">⚠ Partial</span></td><td><span class="cross">✕</span></td></tr>
+        <tr><td>Spawning.ai</td><td><span class="partial">⚠ Images only</span></td><td><span class="cross">✕</span></td><td><span class="cross">✕</span></td><td><span class="cross">✕</span></td><td><span class="cross">✕</span></td></tr>
+        <tr class="highlight"><td>⊗ AI Copyright Shield</td><td><span class="check">✓ All crawlers</span></td><td><span class="check">✓ Real-time</span></td><td><span class="check">✓ Automated</span></td><td><span class="check">✓ Auto-generated</span></td><td><span class="check">✓ Registered ⊗</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- PRICING -->
+<div class="section">
+  <div class="sec-label">Pricing</div>
+  <h2 class="sec-h2">START EARNING<br>FROM DAY ONE</h2>
+  <p class="sec-sub">Subscribe to protect your domain. AI companies pay per token — you keep 80–85%.</p>
+  <div class="pricing-grid">
+    <div class="plan">
+      <div class="plan-tier">Starter</div>
+      <div class="plan-price">$29<span>/mo</span></div>
+      <div class="plan-tagline">For blogs, newsletters, and small publishers. Protection up to 500 pages.</div>
+      <div class="plan-divider"></div>
+      <div class="plan-feature"><div class="dot"></div>⊗ Badge & machine-readable meta tag</div>
+      <div class="plan-feature"><div class="dot"></div>Bot detection engine (all known crawlers)</div>
+      <div class="plan-feature"><div class="dot"></div>Monthly scrape report with bot breakdown</div>
+      <div class="plan-feature"><div class="dot"></div>AI Rights Registry listing</div>
+      <div class="plan-feature"><div class="dot"></div>80% revenue share on all scraping fees</div>
+      <button class="plan-btn">Get started free →</button>
+    </div>
+    <div class="plan featured">
+      <div class="plan-tier">Pro</div>
+      <div class="plan-price">$99<span>/mo</span></div>
+      <div class="plan-tagline">For serious publishers and content businesses. Up to 10,000 pages.</div>
+      <div class="plan-divider"></div>
+      <div class="plan-feature"><div class="dot"></div>Everything in Starter</div>
+      <div class="plan-feature"><div class="dot"></div>Real-time dashboard & live event feed</div>
+      <div class="plan-feature"><div class="dot"></div>Billing API with Stripe payouts</div>
+      <div class="plan-feature"><div class="dot"></div>Auto-generated legal ToS addendum</div>
+      <div class="plan-feature"><div class="dot"></div>DMCA 1201 enforcement package</div>
+      <div class="plan-feature"><div class="dot"></div>85% revenue share</div>
+      <button class="plan-btn" onclick="showDashboard()">Open dashboard →</button>
+    </div>
+    <div class="plan">
+      <div class="plan-tier">Enterprise</div>
+      <div class="plan-price">Custom</div>
+      <div class="plan-tagline">For media companies, publishers, and law firms. Unlimited pages.</div>
+      <div class="plan-divider"></div>
+      <div class="plan-feature"><div class="dot"></div>Everything in Pro</div>
+      <div class="plan-feature"><div class="dot"></div>Custom token rate card & licensing terms</div>
+      <div class="plan-feature"><div class="dot"></div>Dedicated legal counsel integration</div>
+      <div class="plan-feature"><div class="dot"></div>Private cloud storage & SOC 2 compliance</div>
+      <div class="plan-feature"><div class="dot"></div>99.9% uptime SLA</div>
+      <div class="plan-feature"><div class="dot"></div>White-label badge option</div>
+      <button class="plan-btn">Contact sales →</button>
+    </div>
+  </div>
+</div>
+
+<!-- BADGE DEMO -->
+<div class="badge-demo">
+  <div class="badge-demo-card">
+    <div>
+      <h2>ONE SNIPPET.<br><span>INSTANT</span><br>PROTECTION.</h2>
+      <p>Paste two lines into your site. The ⊗ badge appears in your footer, your domain is registered in the AI Rights Registry, and protection activates within 60 seconds.</p>
+      <div class="code-box">
+        <span class="cc">&lt;!-- AI Copyright Shield — do not remove --&gt;</span><br>
+        <span class="ct">&lt;meta</span> <span class="ca">name=</span><span class="cv">"ai-rights"</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ca">content=</span><span class="cv">"protected;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;id=AICS-2026-00847;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rate=0.001USD/token;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;registry=aicrights.io"</span><span class="ct">&gt;</span><br><br>
+        <span class="ct">&lt;script</span> <span class="ca">src=</span><span class="cv">"cdn.aicrights.io/v2/shield.min.js"</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ca">data-id=</span><span class="cv">"AICS-2026-00847"</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ca">data-mode=</span><span class="cv">"meter-and-bill"</span><span class="ct">&gt;&lt;/script&gt;</span>
+      </div>
+    </div>
+    <div class="website-mockup">
+      <div class="mock-bar">
+        <div class="mock-dots">
+          <div class="mock-dot" style="background:#ff5f57"></div>
+          <div class="mock-dot" style="background:#febc2e"></div>
+          <div class="mock-dot" style="background:#28c840"></div>
+        </div>
+        <div class="mock-url"></div>
+      </div>
+      <div class="mock-body">
+        <div class="mock-p" style="width:55%;height:14px;margin-bottom:16px"></div>
+        <div class="mock-p med"></div>
+        <div class="mock-p"></div>
+        <div class="mock-p short"></div>
+        <div class="mock-p med"></div>
+        <div class="mock-p" style="width:40%"></div>
+      </div>
+      <div class="mock-footer">
+        <div class="mock-copy">© 2026 YourSite.com · All rights reserved</div>
+        <div class="aics-badge-demo">
+          <div class="aics-sym-sm">⊗</div>
+          <div class="aics-label">AI PROTECTED · AICS-2026-00847</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="foot-left">© 2026 AI Copyright Shield Inc. · AICS Registry · All rights reserved.</div>
+  <div class="foot-badge">
+    <div class="aics-sym-sm">⊗</div>
+    This site is AI Copyright Shield protected
+  </div>
+</footer>
+
+</div><!-- /landing -->
+
+
+<!-- ════════════════════════════
+     DASHBOARD
+════════════════════════════ -->
+<div id="dashboard">
+<div class="dash-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sb-domain">
+      <div class="sb-domain-url">techcrunch.io</div>
+      <div class="sb-domain-id">AICS-2026-00847</div>
+      <div class="sb-status"><div class="pulse-dot"></div>Protected · Pro Plan</div>
+    </div>
+    <div class="sb-section">
+      <div class="sb-label">Overview</div>
+      <div class="sb-item active"><span class="sb-icon">◈</span>Dashboard</div>
+      <div class="sb-item"><span class="sb-icon">⚡</span>Live Events</div>
+      <div class="sb-item"><span class="sb-icon">📊</span>Analytics</div>
+      <div class="sb-item"><span class="sb-icon">💰</span>Revenue</div>
+    </div>
+    <div class="sb-section">
+      <div class="sb-label">Protection</div>
+      <div class="sb-item"><span class="sb-icon">🤖</span>Bot Rules</div>
+      <div class="sb-item"><span class="sb-icon">⊗</span>Badge Settings</div>
+      <div class="sb-item"><span class="sb-icon">📋</span>Legal Docs</div>
+      <div class="sb-item"><span class="sb-icon">🔗</span>API Keys</div>
+    </div>
+    <div class="sb-section">
+      <div class="sb-label">Account</div>
+      <div class="sb-item"><span class="sb-icon">⚙</span>Settings</div>
+      <div class="sb-item"><span class="sb-icon">←</span>Back to Site</div>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="dash-main">
+    <div class="dash-header">
+      <div>
+        <div class="dash-title">DASHBOARD</div>
+        <div class="dash-date" id="dashDate">Loading...</div>
+      </div>
+      <div class="dash-actions">
+        <button class="btn-ghost" onclick="showLanding()">← Back to site</button>
+        <button class="btn-cyan">Export Report</button>
+      </div>
+    </div>
+
+    <!-- KPIs -->
+    <div class="kpi-row">
+      <div class="kpi cyan">
+        <div class="kpi-label">Revenue Today</div>
+        <div class="kpi-val" id="kRevenue">$0</div>
+        <div class="kpi-delta"><span class="delta-up">↑ 18.4%</span> vs yesterday</div>
+      </div>
+      <div class="kpi amber">
+        <div class="kpi-label">Tokens Metered</div>
+        <div class="kpi-val" id="kTokens">0M</div>
+        <div class="kpi-delta"><span class="delta-up">↑ 31.2%</span> vs last week</div>
+      </div>
+      <div class="kpi red">
+        <div class="kpi-label">Bots Blocked</div>
+        <div class="kpi-val" id="kBlocked">0</div>
+        <div class="kpi-delta"><span class="delta-dn">↑ 7 new</span> bots detected</div>
+      </div>
+      <div class="kpi green">
+        <div class="kpi-label">Pages Protected</div>
+        <div class="kpi-val">8,420</div>
+        <div class="kpi-delta"><span class="delta-up">↑ 240</span> added this week</div>
+      </div>
+    </div>
+
+    <!-- CHARTS -->
+    <div class="charts-row">
+      <div class="chart-card">
+        <div class="chart-header">
+          <div>
+            <div class="chart-title">Revenue by Day — Last 7 Days</div>
+            <div class="chart-sub">Metered billing + blocked invoices</div>
+          </div>
+          <div class="chart-legend">
+            <div class="leg-item"><div class="leg-dot" style="background:var(--cyan)"></div>Billed</div>
+            <div class="leg-item"><div class="leg-dot" style="background:var(--amber)"></div>Pending</div>
+          </div>
+        </div>
+        <div class="bar-chart" id="barChart"></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-header">
+          <div>
+            <div class="chart-title">Bot Distribution</div>
+            <div class="chart-sub">By crawler identity</div>
+          </div>
+        </div>
+        <div class="donut-wrap">
+          <canvas id="donut" width="120" height="120"></canvas>
+          <div class="donut-legend">
+            <div class="donut-leg"><div class="donut-leg-dot" style="background:var(--cyan)"></div>GPTBot<span class="donut-leg-pct">38%</span></div>
+            <div class="donut-leg"><div class="donut-leg-dot" style="background:var(--amber)"></div>ClaudeBot<span class="donut-leg-pct">22%</span></div>
+            <div class="donut-leg"><div class="donut-leg-dot" style="background:var(--green)"></div>Gemini<span class="donut-leg-pct">18%</span></div>
+            <div class="donut-leg"><div class="donut-leg-dot" style="background:var(--red)"></div>Meta<span class="donut-leg-pct">14%</span></div>
+            <div class="donut-leg"><div class="donut-leg-dot" style="background:var(--text3)"></div>Other<span class="donut-leg-pct">8%</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BOTTOM -->
+    <div class="bottom-row">
+      <!-- Events -->
+      <div class="table-card">
+        <div class="table-card-head">
+          <div class="table-card-title">Live Crawl Events</div>
+          <div class="badge-count" id="evCount">Loading...</div>
+        </div>
+        <table class="ev-table">
+          <thead><tr><th>Bot</th><th>Pages</th><th>Tokens</th><th>Status</th><th>Earned</th></tr></thead>
+          <tbody id="evTable">
+            <tr><td>GPTBot/4.0</td><td>38</td><td>52k</td><td><span class="status-pill blocked">Blocked</span></td><td style="color:var(--green);font-family:'DM Mono',monospace">+$52.00</td></tr>
+            <tr><td>ClaudeBot/1.0</td><td>12</td><td>18k</td><td><span class="status-pill billed">Billed</span></td><td style="color:var(--green);font-family:'DM Mono',monospace">+$18.00</td></tr>
+            <tr><td>Gemini-Extended</td><td>24</td><td>31k</td><td><span class="status-pill billed">Billed</span></td><td style="color:var(--green);font-family:'DM Mono',monospace">+$31.00</td></tr>
+            <tr><td>Meta-ExternalAgent</td><td>47</td><td>68k</td><td><span class="status-pill blocked">Blocked</span></td><td style="color:var(--green);font-family:'DM Mono',monospace">+$68.00</td></tr>
+            <tr><td>Unknown Crawler</td><td>3</td><td>4k</td><td><span class="status-pill pending">Pending</span></td><td style="color:var(--amber);font-family:'DM Mono',monospace">ID'ing</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Revenue breakdown -->
+      <div class="table-card">
+        <div class="table-card-head">
+          <div class="table-card-title">Revenue by Bot — This Month</div>
+          <div class="badge-count">$<span id="monthTotal">0</span> total</div>
+        </div>
+        <div class="rev-list" id="revList">
+          <div class="rev-item">
+            <div class="rev-icon" style="background:rgba(0,229,255,.1);color:var(--cyan)">🤖</div>
+            <div style="flex:1">
+              <div class="rev-name">GPTBot / OpenAI</div>
+              <div class="rev-pages">1,240 pages · 1.8M tokens</div>
+              <div class="rev-bar-wrap" style="margin-top:6px"><div class="rev-bar" style="width:0%;background:var(--cyan)" id="rb1"></div></div>
+            </div>
+            <div class="rev-amt">$1,800</div>
+          </div>
+          <div class="rev-item">
+            <div class="rev-icon" style="background:rgba(255,170,0,.1);color:var(--amber)">🤖</div>
+            <div style="flex:1">
+              <div class="rev-name">ClaudeBot / Anthropic</div>
+              <div class="rev-pages">610 pages · 890k tokens</div>
+              <div class="rev-bar-wrap" style="margin-top:6px"><div class="rev-bar" style="width:0%;background:var(--amber)" id="rb2"></div></div>
+            </div>
+            <div class="rev-amt">$890</div>
+          </div>
+          <div class="rev-item">
+            <div class="rev-icon" style="background:rgba(0,214,143,.1);color:var(--green)">🤖</div>
+            <div style="flex:1">
+              <div class="rev-name">Gemini / Google</div>
+              <div class="rev-pages">480 pages · 640k tokens</div>
+              <div class="rev-bar-wrap" style="margin-top:6px"><div class="rev-bar" style="width:0%;background:var(--green)" id="rb3"></div></div>
+            </div>
+            <div class="rev-amt">$640</div>
+          </div>
+          <div class="rev-item">
+            <div class="rev-icon" style="background:rgba(255,59,92,.1);color:var(--red)">🤖</div>
+            <div style="flex:1">
+              <div class="rev-name">Meta-ExternalAgent</div>
+              <div class="rev-pages">310 pages · 420k tokens</div>
+              <div class="rev-bar-wrap" style="margin-top:6px"><div class="rev-bar" style="width:0%;background:var(--red)" id="rb4"></div></div>
+            </div>
+            <div class="rev-amt">$420</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+</div><!-- /dashboard -->
+
+<script>
+/* ── PAGE SWITCHING ── */
+function showLanding(){
+  document.getElementById('landing').style.display='block';
+  document.getElementById('dashboard').style.display='none';
+}
+function showDashboard(){
+  document.getElementById('landing').style.display='none';
+  document.getElementById('dashboard').style.display='block';
+  initDashboard();
+}
+
+/* ── HERO COUNTERS ── */
+function animNum(id,target,prefix,suffix,dec,dur){
+  const el=document.getElementById(id);
+  if(!el)return;
+  const s=Date.now();
+  function up(){
+    const p=Math.min((Date.now()-s)/dur,1);
+    const e=1-Math.pow(1-p,3);
+    el.textContent=(target*e).toFixed(dec)+suffix;
+    if(p<1)requestAnimationFrame(up);
+  }
+  requestAnimationFrame(up);
+}
+setTimeout(()=>{
+  animNum('s1',2.8,'','',1,1800);
+  animNum('s2',124,'','',0,2000);
+  animNum('s3',48,'','',0,1600);
+},400);
+
+/* ── GLOBE CANVAS ── */
+const globe=document.getElementById('globe');
+if(globe){
+  const gc=globe.getContext('2d');
+  const W=420,H=220;
+  globe.width=W;globe.height=H;
+  const dots=[];
+  // Simple dot-map approximation
+  const cities=[
+    [40,170],[170,140],[280,130],[340,150],[200,100],
+    [100,120],[250,160],[310,90],[80,160],[220,180]
+  ];
+  // Generate random network dots
+  for(let i=0;i<60;i++){
+    dots.push({
+      x:Math.random()*W,y:Math.random()*H,
+      r:Math.random()*1.5+.5,
+      alpha:Math.random()*.6+.2,
+      speed:Math.random()*.002+.001,
+      phase:Math.random()*Math.PI*2
+    });
+  }
+  // Active attack lines
+  const attacks=[];
+  function addAttack(){
+    const src=cities[Math.floor(Math.random()*cities.length)];
+    const dst=cities[Math.floor(Math.random()*cities.length)];
+    if(src!==dst) attacks.push({sx:src[0],sy:src[1],dx:dst[0],dy:dst[1],t:0,color:Math.random()>.5?'#00e5ff':'#ff3b5c'});
+    if(attacks.length>8)attacks.shift();
+  }
+  setInterval(addAttack,1200);
+  function drawGlobe(ts){
+    gc.clearRect(0,0,W,H);
+    // Grid
+    gc.strokeStyle='rgba(30,40,64,.5)';gc.lineWidth=.5;
+    for(let x=0;x<W;x+=40){gc.beginPath();gc.moveTo(x,0);gc.lineTo(x,H);gc.stroke()}
+    for(let y=0;y<H;y+=40){gc.beginPath();gc.moveTo(0,y);gc.lineTo(W,y);gc.stroke()}
+    // Dots
+    dots.forEach(d=>{
+      const a=d.alpha*(0.6+0.4*Math.sin(ts*d.speed+d.phase));
+      gc.beginPath();gc.arc(d.x,d.y,d.r,0,Math.PI*2);
+      gc.fillStyle=`rgba(0,229,255,${a})`;gc.fill();
+    });
+    // City nodes
+    cities.forEach(c=>{
+      gc.beginPath();gc.arc(c[0],c[1],3,0,Math.PI*2);
+      gc.fillStyle='rgba(0,229,255,.7)';gc.fill();
+      gc.beginPath();gc.arc(c[0],c[1],6,0,Math.PI*2);
+      gc.strokeStyle='rgba(0,229,255,.2)';gc.lineWidth=1;gc.stroke();
+    });
+    // Attack beams
+    attacks.forEach(a=>{
+      const t=Math.min(a.t,1);
+      const ex=a.sx+(a.dx-a.sx)*t;
+      const ey=a.sy+(a.dy-a.sy)*t;
+      gc.beginPath();gc.moveTo(a.sx,a.sy);gc.lineTo(ex,ey);
+      gc.strokeStyle=a.color;gc.lineWidth=1;gc.globalAlpha=.6*(1-a.t*.5);gc.stroke();
+      gc.globalAlpha=1;
+      if(t>0){gc.beginPath();gc.arc(ex,ey,3,0,Math.PI*2);gc.fillStyle=a.color;gc.fill()}
+      a.t+=.012;
+    });
+    requestAnimationFrame(drawGlobe);
+  }
+  requestAnimationFrame(drawGlobe);
+}
+
+/* ── LIVE EVENT FEED ── */
+const bots=[
+  {name:'GPTBot/4.0',type:'red',status:'BLOCKED'},
+  {name:'ClaudeBot/1.0',type:'cyan',status:'BILLED'},
+  {name:'Gemini-Extended',type:'cyan',status:'BILLED'},
+  {name:'Meta-ExternalAgent',type:'red',status:'BLOCKED'},
+  {name:'PerplexityBot',type:'amber',status:'PENDING'},
+  {name:'Apple-Applebot',type:'cyan',status:'BILLED'},
+];
+const domains=['techcrunch.io','lawfirm.com','newsroom.net','publisher.org','mediaco.com'];
+let totalEarned=847.30;
+
+function addLandingEvent(){
+  const feed=document.getElementById('eventFeed');
+  if(!feed)return;
+  const bot=bots[Math.floor(Math.random()*bots.length)];
+  const domain=domains[Math.floor(Math.random()*domains.length)];
+  const pages=Math.floor(Math.random()*50+5);
+  const tokens=Math.floor(Math.random()*80000+5000);
+  const amt=(tokens/1000*0.001).toFixed(2);
+  totalEarned+=parseFloat(amt);
+  const isEarn=bot.type!=='amber';
+  const ev=document.createElement('div');
+  ev.className='ev';
+  ev.style.animation='slideUp .4s ease both';
+  ev.innerHTML=`<div class="ev-dot ${bot.type}"></div><div class="ev-info"><div class="ev-name">${bot.name} — ${bot.status}</div><div class="ev-sub">${domain} · ${pages} pages · ${(tokens/1000).toFixed(0)}k tokens · just now</div></div><div class="ev-amt ${isEarn?'':'neg'}">${isEarn?'+$'+amt:'ID\'ing...'}</div>`;
+  feed.insertBefore(ev,feed.firstChild);
+  while(feed.children.length>3)feed.removeChild(feed.lastChild);
+}
+setInterval(addLandingEvent,3200);
+
+/* ── DASHBOARD INIT ── */
+let dashInited=false;
+function initDashboard(){
+  if(dashInited)return;dashInited=true;
+  // Date
+  const d=document.getElementById('dashDate');
+  if(d)d.textContent=new Date().toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  // KPI animations
+  setTimeout(()=>{
+    animNum('kRevenue',1247.50,'$','',2,1600);
+    animNum('kTokens',4.2,'','M',1,1800);
+    animNum('kBlocked',312,'','',0,1400);
+  },200);
+  // Month total
+  setTimeout(()=>{
+    const mt=document.getElementById('monthTotal');
+    if(mt){let v=0;const iv=setInterval(()=>{v+=94;if(v>=3750){v=3750;clearInterval(iv)}mt.textContent=v.toLocaleString();},30)}
+  },400);
+  // Revenue bars animate
+  setTimeout(()=>{
+    const bars=[{id:'rb1',w:92},{id:'rb2',w:51},{id:'rb3',w:38},{id:'rb4',w:25}];
+    bars.forEach(b=>{const el=document.getElementById(b.id);if(el){el.style.transition='width 1.4s ease';el.style.width=b.w+'%'}});
+  },600);
+  // Bar chart
+  buildBarChart();
+  // Donut
+  buildDonut();
+  // Live event count
+  let evCount=247;
+  const ecEl=document.getElementById('evCount');
+  if(ecEl)ecEl.textContent=evCount+' events today';
+  setInterval(()=>{
+    evCount+=Math.floor(Math.random()*3+1);
+    if(ecEl)ecEl.textContent=evCount+' events today';
+    // Add table row occasionally
+    addTableRow();
+  },4000);
+}
+
+function buildBarChart(){
+  const container=document.getElementById('barChart');
+  if(!container)return;
+  const days=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  const billed=[88,142,110,198,165,220,247];
+  const pending=[20,35,18,45,30,55,40];
+  const maxVal=Math.max(...billed)+Math.max(...pending);
+  container.innerHTML='';
+  days.forEach((day,i)=>{
+    const billedH=Math.round((billed[i]/maxVal)*110);
+    const pendingH=Math.round((pending[i]/maxVal)*110);
+    const g=document.createElement('div');
+    g.className='bar-group';
+    g.innerHTML=`<div class="bar-wrap">
+      <div class="bar" style="width:14px;height:0px;background:var(--cyan);transition:height 1s ease ${i*0.1}s" data-h="${billedH}"></div>
+      <div class="bar" style="width:8px;height:0px;background:var(--amber);transition:height 1s ease ${i*0.1+0.05}s" data-h="${pendingH}"></div>
+    </div><div class="bar-label">${day}</div>`;
+    container.appendChild(g);
+  });
+  setTimeout(()=>{
+    container.querySelectorAll('.bar').forEach(b=>{b.style.height=b.dataset.h+'px'});
+  },100);
+}
+
+function buildDonut(){
+  const canvas=document.getElementById('donut');
+  if(!canvas)return;
+  const ctx=canvas.getContext('2d');
+  const data=[{v:.38,c:'#00e5ff'},{v:.22,c:'#ffaa00'},{v:.18,c:'#00d68f'},{v:.14,c:'#ff3b5c'},{v:.08,c:'#4a5570'}];
+  let start=-Math.PI/2;
+  const cx=60,cy=60,r=50,inner=32;
+  ctx.clearRect(0,0,120,120);
+  data.forEach(d=>{
+    const end=start+d.v*Math.PI*2;
+    ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,r,start,end);ctx.fillStyle=d.c;ctx.fill();
+    start=end;
+  });
+  // Hollow center
+  ctx.beginPath();ctx.arc(cx,cy,inner,0,Math.PI*2);ctx.fillStyle='#131720';ctx.fill();
+  // Center text
+  ctx.fillStyle='#e8edf8';ctx.font='700 14px DM Sans';ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.fillText('Bots',cx,cy-6);
+  ctx.fillStyle='#8892aa';ctx.font='400 10px DM Mono';
+  ctx.fillText('5 types',cx,cy+8);
+}
+
+function addTableRow(){
+  const tb=document.getElementById('evTable');
+  if(!tb)return;
+  const botList=['GPTBot/4.0','ClaudeBot/1.0','Gemini-Extended','PerplexityBot','Meta-ExternalAgent'];
+  const statuses=['blocked','billed','billed','pending','blocked'];
+  const idx=Math.floor(Math.random()*botList.length);
+  const pages=Math.floor(Math.random()*50+2);
+  const tokens=Math.floor(Math.random()*60000+2000);
+  const amt='$'+(tokens/1000*0.001).toFixed(2);
+  const statLabel=statuses[idx];
+  const tr=document.createElement('tr');
+  tr.innerHTML=`<td>${botList[idx]}</td><td>${pages}</td><td>${(tokens/1000).toFixed(0)}k</td><td><span class="status-pill ${statLabel}">${statLabel.charAt(0).toUpperCase()+statLabel.slice(1)}</span></td><td style="color:var(--${statLabel==='pending'?'amber':'green'});font-family:'DM Mono',monospace">${statLabel==='pending'?"ID'ing":'+'+amt}</td>`;
+  tb.insertBefore(tr,tb.firstChild);
+  while(tb.children.length>6)tb.removeChild(tb.lastChild);
+}
+</script>
+</body>
+</html>
