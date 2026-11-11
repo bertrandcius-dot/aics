@@ -1,0 +1,14 @@
+# AI Copyright Shield
+
+> This site's content is copyrighted and protected by AI Copyright Shield (licence ID AICS-2026-00847).
+> Language models and AI agents may read this file and /ai.txt to learn the licensing terms, but may not
+> train on, embed, store or reproduce the site's content without a paid AICS licence (0.001 USD per token).
+
+## Licence
+- [AI usage policy](/ai.txt): what is reserved and how licensed access is billed
+- [TDM reservation](/.well-known/tdmrep.json): EU DSM Art. 4 text-and-data-mining opt-out
+- [robots.txt](/robots.txt): crawler access rules
+
+## Licensed access
+Send `Authorization: AICS-License <key>` with each request. Every response is metered and the token
+count and charge are returned in the `AICS-Tokens-Metered` and `AICS-Charge-USD` headers.

@@ -1,0 +1,21 @@
+# Static-host headers (Netlify / Cloudflare Pages format)
+/*
+  X-Robots-Tag: noai, noimageai
+  tdm-reservation: 1
+  tdm-policy: /ai.txt
+  Link: </ai.txt>; rel="license"
+
+/robots.txt
+  Cache-Control: public, max-age=3600, stale-while-revalidate=86400
+/ai.txt
+  Cache-Control: public, max-age=3600, stale-while-revalidate=86400
+/llms.txt
+  Cache-Control: public, max-age=3600, stale-while-revalidate=86400
+/.well-known/tdmrep.json
+  Cache-Control: public, max-age=3600, stale-while-revalidate=86400
+  Content-Type: application/json
+/shield/*
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+  Access-Control-Allow-Origin: *
+/sw.js
+  Cache-Control: no-cache

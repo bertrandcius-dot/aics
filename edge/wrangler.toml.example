@@ -1,0 +1,20 @@
+name = "aics-shield"
+main = "worker.js"
+compatibility_date = "2026-01-01"
+
+# Route the worker in front of your site, e.g.
+# routes = [{ pattern = "example.com/*", zone_name = "example.com" }]
+
+[vars]
+AICS_ID = "AICS-2026-00847"
+AICS_OWNER = "YourSite.com"
+AICS_RATE = "0.001"
+AICS_SHARE = "0.85"
+
+[[kv_namespaces]]
+binding = "AICS_EVENTS"
+id = "<your-kv-namespace-id>"
+
+# Secrets (set with `wrangler secret put`):
+#   AICS_LICENSE_KEYS  e.g. "k_live_abc:ClaudeBot,k_live_def:GPTBot"
+#   AICS_ADMIN_TOKEN   bearer token the dashboard uses for GET /aics/events

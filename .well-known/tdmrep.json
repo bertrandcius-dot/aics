@@ -1,0 +1,19 @@
+[
+  {
+    "location": "/",
+    "tdm-reservation": 1,
+    "tdm-policy": "/ai.txt"
+  },
+  {
+    "location": "/robots.txt",
+    "tdm-reservation": 0
+  },
+  {
+    "location": "/ai.txt",
+    "tdm-reservation": 0
+  },
+  {
+    "location": "/llms.txt",
+    "tdm-reservation": 0
+  }
+]

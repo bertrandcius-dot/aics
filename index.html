@@ -4,6 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>AI Copyright Shield ⊗ — Protect. Meter. Earn.</title>
+<!-- AI Copyright Shield — machine-readable rights signals -->
+<meta name="robots" content="noai, noimageai">
+<meta name="tdm-reservation" content="1">
+<meta name="tdm-policy" content="ai.txt">
+<meta name="ai-rights" content="protected; id=AICS-2026-00847; rate=0.001USD/token; terms=ai.txt">
+<link rel="license" href="ai.txt">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -299,7 +305,26 @@ table.ev-table tr:hover td{background:rgba(255,255,255,.02)}
 .kpi{animation:fadeIn .5s ease both}
 .kpi:nth-child(1){animation-delay:.05s}.kpi:nth-child(2){animation-delay:.1s}.kpi:nth-child(3){animation-delay:.15s}.kpi:nth-child(4){animation-delay:.2s}
 
-@media(max-width:960px){.hero-grid{grid-template-columns:1fr}.hero-right{display:none}.steps-grid{grid-template-columns:1fr 1fr}.pricing-grid{grid-template-columns:1fr}.badge-demo-card{grid-template-columns:1fr}.charts-row{grid-template-columns:1fr}.bottom-row{grid-template-columns:1fr}.dash-layout{grid-template-columns:1fr}.sidebar{display:none}.kpi-row{grid-template-columns:1fr 1fr}}
+/* ── SHIELD SETUP / DOWNLOADS ── */
+.dl-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.dl-btn{background:var(--surface2);border:1px solid var(--border2);color:var(--text2);padding:7px 14px;border-radius:6px;font-size:12px;font-family:'DM Mono',monospace;cursor:pointer;transition:all .2s}
+.dl-btn:hover{border-color:var(--cyan);color:var(--cyan)}
+.code-box pre{white-space:pre-wrap;word-break:break-all;font:inherit;margin:0}
+.setup-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+.setup-body{padding:16px 20px}
+.field{display:flex;flex-direction:column;gap:5px;margin-bottom:12px}
+.field label{font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:var(--text3)}
+.field input,.field select{background:var(--bg);border:1px solid var(--border2);border-radius:6px;color:var(--text);padding:8px 10px;font-family:'DM Sans',sans-serif;font-size:13px}
+.field input:focus,.field select:focus{outline:none;border-color:var(--cyan)}
+.field-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}
+.rules-list{max-height:330px;overflow-y:auto}
+.rule{display:flex;align-items:center;justify-content:space-between;padding:8px 20px;border-bottom:1px solid var(--border);font-size:12px}
+.rule-vendor{font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);margin-left:6px}
+.sim-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding:12px 20px;border-top:1px solid var(--border)}
+.sim-row select{background:var(--bg);border:1px solid var(--border2);border-radius:6px;color:var(--text);padding:6px 8px;font-size:12px}
+.demo-tag{font-family:'DM Mono',monospace;font-size:9px;color:var(--text3);margin-left:4px}
+.empty-row td{color:var(--text3);text-align:center;padding:18px}
+@media(max-width:960px){.setup-row{grid-template-columns:1fr}.field-grid{grid-template-columns:1fr}.hero-grid{grid-template-columns:1fr}.hero-right{display:none}.steps-grid{grid-template-columns:1fr 1fr}.pricing-grid{grid-template-columns:1fr}.badge-demo-card{grid-template-columns:1fr}.charts-row{grid-template-columns:1fr}.bottom-row{grid-template-columns:1fr}.dash-layout{grid-template-columns:1fr}.sidebar{display:none}.kpi-row{grid-template-columns:1fr 1fr}}
 </style>
 </head>
 <body>
@@ -336,7 +361,7 @@ table.ev-table tr:hover td{background:rgba(255,255,255,.02)}
       <p class="hero-sub">The world's first metered licensing infrastructure for AI training data. Detect every LLM crawler, charge per token, and display the ⊗ symbol that makes your website legally protected.</p>
       <div class="hero-ctas">
         <button class="btn-large-cyan" onclick="showDashboard()">Open Live Dashboard →</button>
-        <button class="btn-large-ghost">Read the Docs</button>
+        <button class="btn-large-ghost" onclick="document.getElementById('install').scrollIntoView({behavior:'smooth'})">Install the Shield</button>
       </div>
       <div class="hero-stats">
         <div>
@@ -457,7 +482,7 @@ table.ev-table tr:hover td{background:rgba(255,255,255,.02)}
       <div class="plan-feature"><div class="dot"></div>Monthly scrape report with bot breakdown</div>
       <div class="plan-feature"><div class="dot"></div>AI Rights Registry listing</div>
       <div class="plan-feature"><div class="dot"></div>80% revenue share on all scraping fees</div>
-      <button class="plan-btn">Get started free →</button>
+      <button class="plan-btn" onclick="openSetup()">Get started free →</button>
     </div>
     <div class="plan featured">
       <div class="plan-tier">Pro</div>
@@ -483,27 +508,28 @@ table.ev-table tr:hover td{background:rgba(255,255,255,.02)}
       <div class="plan-feature"><div class="dot"></div>Private cloud storage & SOC 2 compliance</div>
       <div class="plan-feature"><div class="dot"></div>99.9% uptime SLA</div>
       <div class="plan-feature"><div class="dot"></div>White-label badge option</div>
-      <button class="plan-btn">Contact sales →</button>
+      <button class="plan-btn" onclick="location.href='ai.txt'">View licence terms →</button>
     </div>
   </div>
 </div>
 
 <!-- BADGE DEMO -->
-<div class="badge-demo">
+<div class="badge-demo" id="install">
   <div class="badge-demo-card">
     <div>
       <h2>ONE SNIPPET.<br><span>INSTANT</span><br>PROTECTION.</h2>
-      <p>Paste two lines into your site. The ⊗ badge appears in your footer, your domain is registered in the AI Rights Registry, and protection activates within 60 seconds.</p>
-      <div class="code-box">
-        <span class="cc">&lt;!-- AI Copyright Shield — do not remove --&gt;</span><br>
-        <span class="ct">&lt;meta</span> <span class="ca">name=</span><span class="cv">"ai-rights"</span><br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ca">content=</span><span class="cv">"protected;<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;id=AICS-2026-00847;<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rate=0.001USD/token;<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;registry=aicrights.io"</span><span class="ct">&gt;</span><br><br>
-        <span class="ct">&lt;script</span> <span class="ca">src=</span><span class="cv">"cdn.aicrights.io/v2/shield.min.js"</span><br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ca">data-id=</span><span class="cv">"AICS-2026-00847"</span><br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="ca">data-mode=</span><span class="cv">"meter-and-bill"</span><span class="ct">&gt;&lt;/script&gt;</span>
+      <p>Paste the snippet into your &lt;head&gt; and upload robots.txt, ai.txt and tdmrep.json to your site root. The ⊗ watermark appears at the bottom of every page, AI crawlers are detected, metered per token and billed or blocked, and every hit lands in your dashboard.</p>
+      <div class="code-box"><pre id="landingSnippet">Loading snippet…</pre></div>
+      <div class="dl-row">
+        <button class="dl-btn" onclick="copySnippet()">Copy snippet</button>
+        <button class="dl-btn" onclick="downloadFile('aics-snippet.html')">⬇ snippet.html</button>
+        <button class="dl-btn" onclick="downloadFile('shield/shield.js')">⬇ shield.js</button>
+        <button class="dl-btn" onclick="downloadFile('robots.txt')">⬇ robots.txt</button>
+        <button class="dl-btn" onclick="downloadFile('ai.txt')">⬇ ai.txt</button>
+        <button class="dl-btn" onclick="downloadFile('llms.txt')">⬇ llms.txt</button>
+        <button class="dl-btn" onclick="downloadFile('.well-known/tdmrep.json')">⬇ tdmrep.json</button>
+        <button class="dl-btn" onclick="downloadFile('sw.js')">⬇ sw.js (cache)</button>
+        <button class="dl-btn" onclick="downloadFile('edge/worker.js')">⬇ edge worker</button>
       </div>
     </div>
     <div class="website-mockup">
@@ -536,10 +562,7 @@ table.ev-table tr:hover td{background:rgba(255,255,255,.02)}
 
 <footer>
   <div class="foot-left">© 2026 AI Copyright Shield Inc. · AICS Registry · All rights reserved.</div>
-  <div class="foot-badge">
-    <div class="aics-sym-sm">⊗</div>
-    This site is AI Copyright Shield protected
-  </div>
+  <div class="foot-badge"><a href="robots.txt" style="color:inherit">robots.txt</a> · <a href="ai.txt" style="color:inherit">ai.txt</a> · <a href="llms.txt" style="color:inherit">llms.txt</a></div>
 </footer>
 
 </div><!-- /landing -->
@@ -554,41 +577,42 @@ table.ev-table tr:hover td{background:rgba(255,255,255,.02)}
   <!-- SIDEBAR -->
   <aside class="sidebar">
     <div class="sb-domain">
-      <div class="sb-domain-url">techcrunch.io</div>
-      <div class="sb-domain-id">AICS-2026-00847</div>
+      <div class="sb-domain-url" id="sbDomain">techcrunch.io</div>
+      <div class="sb-domain-id" id="sbId">AICS-2026-00847</div>
       <div class="sb-status"><div class="pulse-dot"></div>Protected · Pro Plan</div>
     </div>
     <div class="sb-section">
       <div class="sb-label">Overview</div>
-      <div class="sb-item active"><span class="sb-icon">◈</span>Dashboard</div>
-      <div class="sb-item"><span class="sb-icon">⚡</span>Live Events</div>
-      <div class="sb-item"><span class="sb-icon">📊</span>Analytics</div>
-      <div class="sb-item"><span class="sb-icon">💰</span>Revenue</div>
+      <div class="sb-item active" onclick="navTo('dashTop',this)"><span class="sb-icon">◈</span>Dashboard</div>
+      <div class="sb-item" onclick="navTo('eventsCard',this)"><span class="sb-icon">⚡</span>Live Events</div>
+      <div class="sb-item" onclick="navTo('chartsRow',this)"><span class="sb-icon">📊</span>Analytics</div>
+      <div class="sb-item" onclick="navTo('revenueCard',this)"><span class="sb-icon">💰</span>Revenue</div>
     </div>
     <div class="sb-section">
       <div class="sb-label">Protection</div>
-      <div class="sb-item"><span class="sb-icon">🤖</span>Bot Rules</div>
-      <div class="sb-item"><span class="sb-icon">⊗</span>Badge Settings</div>
-      <div class="sb-item"><span class="sb-icon">📋</span>Legal Docs</div>
-      <div class="sb-item"><span class="sb-icon">🔗</span>API Keys</div>
+      <div class="sb-item" onclick="navTo('rulesCard',this)"><span class="sb-icon">🤖</span>Bot Rules</div>
+      <div class="sb-item" onclick="navTo('setupCard',this)"><span class="sb-icon">⊗</span>Badge Settings</div>
+      <div class="sb-item" onclick="window.open('ai.txt','_blank')"><span class="sb-icon">📋</span>Legal Docs</div>
+      <div class="sb-item" onclick="navTo('setupCard',this)"><span class="sb-icon">🔗</span>API Keys</div>
     </div>
     <div class="sb-section">
       <div class="sb-label">Account</div>
-      <div class="sb-item"><span class="sb-icon">⚙</span>Settings</div>
-      <div class="sb-item"><span class="sb-icon">←</span>Back to Site</div>
+      <div class="sb-item" onclick="navTo('setupCard',this)"><span class="sb-icon">⚙</span>Settings</div>
+      <div class="sb-item" onclick="showLanding()"><span class="sb-icon">←</span>Back to Site</div>
     </div>
   </aside>
 
   <!-- MAIN CONTENT -->
   <main class="dash-main">
-    <div class="dash-header">
+    <div class="dash-header" id="dashTop">
       <div>
         <div class="dash-title">DASHBOARD</div>
         <div class="dash-date" id="dashDate">Loading...</div>
       </div>
       <div class="dash-actions">
         <button class="btn-ghost" onclick="showLanding()">← Back to site</button>
-        <button class="btn-cyan">Export Report</button>
+        <button class="btn-ghost" id="demoToggle" onclick="toggleDemo()">Demo traffic: on</button>
+        <button class="btn-cyan" onclick="exportReport()">Export Report (CSV)</button>
       </div>
     </div>
 
@@ -597,27 +621,27 @@ table.ev-table tr:hover td{background:rgba(255,255,255,.02)}
       <div class="kpi cyan">
         <div class="kpi-label">Revenue Today</div>
         <div class="kpi-val" id="kRevenue">$0</div>
-        <div class="kpi-delta"><span class="delta-up">↑ 18.4%</span> vs yesterday</div>
+        <div class="kpi-delta" id="kRevenueSub">owner share —</div>
       </div>
       <div class="kpi amber">
         <div class="kpi-label">Tokens Metered</div>
         <div class="kpi-val" id="kTokens">0M</div>
-        <div class="kpi-delta"><span class="delta-up">↑ 31.2%</span> vs last week</div>
+        <div class="kpi-delta" id="kTokensSub">billing at —</div>
       </div>
       <div class="kpi red">
         <div class="kpi-label">Bots Blocked</div>
         <div class="kpi-val" id="kBlocked">0</div>
-        <div class="kpi-delta"><span class="delta-dn">↑ 7 new</span> bots detected</div>
+        <div class="kpi-delta" id="kBlockedSub">— crawlers seen</div>
       </div>
       <div class="kpi green">
         <div class="kpi-label">Pages Protected</div>
-        <div class="kpi-val">8,420</div>
-        <div class="kpi-delta"><span class="delta-up">↑ 240</span> added this week</div>
+        <div class="kpi-val" id="kPages">0</div>
+        <div class="kpi-delta" id="kPagesSub">— human views tracked</div>
       </div>
     </div>
 
     <!-- CHARTS -->
-    <div class="charts-row">
+    <div class="charts-row" id="chartsRow">
       <div class="chart-card">
         <div class="chart-header">
           <div>
@@ -640,12 +664,7 @@ table.ev-table tr:hover td{background:rgba(255,255,255,.02)}
         </div>
         <div class="donut-wrap">
           <canvas id="donut" width="120" height="120"></canvas>
-          <div class="donut-legend">
-            <div class="donut-leg"><div class="donut-leg-dot" style="background:var(--cyan)"></div>GPTBot<span class="donut-leg-pct">38%</span></div>
-            <div class="donut-leg"><div class="donut-leg-dot" style="background:var(--amber)"></div>ClaudeBot<span class="donut-leg-pct">22%</span></div>
-            <div class="donut-leg"><div class="donut-leg-dot" style="background:var(--green)"></div>Gemini<span class="donut-leg-pct">18%</span></div>
-            <div class="donut-leg"><div class="donut-leg-dot" style="background:var(--red)"></div>Meta<span class="donut-leg-pct">14%</span></div>
-            <div class="donut-leg"><div class="donut-leg-dot" style="background:var(--text3)"></div>Other<span class="donut-leg-pct">8%</span></div>
+          <div class="donut-legend" id="donutLegend">
           </div>
         </div>
       </div>
@@ -654,66 +673,67 @@ table.ev-table tr:hover td{background:rgba(255,255,255,.02)}
     <!-- BOTTOM -->
     <div class="bottom-row">
       <!-- Events -->
-      <div class="table-card">
+      <div class="table-card" id="eventsCard">
         <div class="table-card-head">
           <div class="table-card-title">Live Crawl Events</div>
           <div class="badge-count" id="evCount">Loading...</div>
         </div>
         <table class="ev-table">
-          <thead><tr><th>Bot</th><th>Pages</th><th>Tokens</th><th>Status</th><th>Earned</th></tr></thead>
+          <thead><tr><th>Bot</th><th>Pages</th><th>Tokens</th><th>Status</th><th>Charge</th></tr></thead>
           <tbody id="evTable">
-            <tr><td>GPTBot/4.0</td><td>38</td><td>52k</td><td><span class="status-pill blocked">Blocked</span></td><td style="color:var(--green);font-family:'DM Mono',monospace">+$52.00</td></tr>
-            <tr><td>ClaudeBot/1.0</td><td>12</td><td>18k</td><td><span class="status-pill billed">Billed</span></td><td style="color:var(--green);font-family:'DM Mono',monospace">+$18.00</td></tr>
-            <tr><td>Gemini-Extended</td><td>24</td><td>31k</td><td><span class="status-pill billed">Billed</span></td><td style="color:var(--green);font-family:'DM Mono',monospace">+$31.00</td></tr>
-            <tr><td>Meta-ExternalAgent</td><td>47</td><td>68k</td><td><span class="status-pill blocked">Blocked</span></td><td style="color:var(--green);font-family:'DM Mono',monospace">+$68.00</td></tr>
-            <tr><td>Unknown Crawler</td><td>3</td><td>4k</td><td><span class="status-pill pending">Pending</span></td><td style="color:var(--amber);font-family:'DM Mono',monospace">ID'ing</td></tr>
           </tbody>
         </table>
       </div>
 
       <!-- Revenue breakdown -->
-      <div class="table-card">
+      <div class="table-card" id="revenueCard">
         <div class="table-card-head">
           <div class="table-card-title">Revenue by Bot — This Month</div>
           <div class="badge-count">$<span id="monthTotal">0</span> total</div>
         </div>
         <div class="rev-list" id="revList">
-          <div class="rev-item">
-            <div class="rev-icon" style="background:rgba(0,229,255,.1);color:var(--cyan)">🤖</div>
-            <div style="flex:1">
-              <div class="rev-name">GPTBot / OpenAI</div>
-              <div class="rev-pages">1,240 pages · 1.8M tokens</div>
-              <div class="rev-bar-wrap" style="margin-top:6px"><div class="rev-bar" style="width:0%;background:var(--cyan)" id="rb1"></div></div>
-            </div>
-            <div class="rev-amt">$1,800</div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- SHIELD SETUP + BOT RULES -->
+    <div class="setup-row">
+      <div class="table-card" id="setupCard">
+        <div class="table-card-head">
+          <div class="table-card-title">Shield Setup · Badge &amp; Billing</div>
+          <div class="badge-count">embed snippet</div>
+        </div>
+        <div class="setup-body">
+          <div class="field-grid">
+            <div class="field"><label for="cfgOwner">Copyright holder / domain</label><input id="cfgOwner"></div>
+            <div class="field"><label for="cfgId">Licence ID</label><input id="cfgId"></div>
+            <div class="field"><label for="cfgRate">Rate (USD per token)</label><input id="cfgRate" type="number" step="0.0001" min="0"></div>
+            <div class="field"><label for="cfgMode">Mode</label>
+              <select id="cfgMode"><option value="meter-and-bill">meter-and-bill</option><option value="block">block all AI</option><option value="allow">allow &amp; meter all</option></select></div>
           </div>
-          <div class="rev-item">
-            <div class="rev-icon" style="background:rgba(255,170,0,.1);color:var(--amber)">🤖</div>
-            <div style="flex:1">
-              <div class="rev-name">ClaudeBot / Anthropic</div>
-              <div class="rev-pages">610 pages · 890k tokens</div>
-              <div class="rev-bar-wrap" style="margin-top:6px"><div class="rev-bar" style="width:0%;background:var(--amber)" id="rb2"></div></div>
-            </div>
-            <div class="rev-amt">$890</div>
+          <div class="field"><label for="cfgLicensed">Licensed crawlers (billed, not blocked)</label><input id="cfgLicensed" placeholder="ClaudeBot,Google-Extended"></div>
+          <div class="code-box"><pre id="dashSnippet"></pre></div>
+          <div class="dl-row">
+            <button class="dl-btn" onclick="copySnippet('dashSnippet')">Copy</button>
+            <button class="dl-btn" onclick="downloadFile('aics-snippet.html')">⬇ snippet.html</button>
+            <button class="dl-btn" onclick="downloadFile('shield/shield.js')">⬇ shield.js</button>
+            <button class="dl-btn" onclick="downloadFile('robots.txt')">⬇ robots.txt</button>
+            <button class="dl-btn" onclick="downloadFile('ai.txt')">⬇ ai.txt</button>
+            <button class="dl-btn" onclick="downloadFile('edge/worker.js')">⬇ edge worker</button>
           </div>
-          <div class="rev-item">
-            <div class="rev-icon" style="background:rgba(0,214,143,.1);color:var(--green)">🤖</div>
-            <div style="flex:1">
-              <div class="rev-name">Gemini / Google</div>
-              <div class="rev-pages">480 pages · 640k tokens</div>
-              <div class="rev-bar-wrap" style="margin-top:6px"><div class="rev-bar" style="width:0%;background:var(--green)" id="rb3"></div></div>
-            </div>
-            <div class="rev-amt">$640</div>
-          </div>
-          <div class="rev-item">
-            <div class="rev-icon" style="background:rgba(255,59,92,.1);color:var(--red)">🤖</div>
-            <div style="flex:1">
-              <div class="rev-name">Meta-ExternalAgent</div>
-              <div class="rev-pages">310 pages · 420k tokens</div>
-              <div class="rev-bar-wrap" style="margin-top:6px"><div class="rev-bar" style="width:0%;background:var(--red)" id="rb4"></div></div>
-            </div>
-            <div class="rev-amt">$420</div>
-          </div>
+        </div>
+      </div>
+      <div class="table-card" id="rulesCard">
+        <div class="table-card-head">
+          <div class="table-card-title">Bot Rules</div>
+          <div class="badge-count" id="rulesCount">—</div>
+        </div>
+        <div class="rules-list" id="rulesList"></div>
+        <div class="sim-row">
+          <select id="simBot" aria-label="Crawler to simulate"></select>
+          <button class="dl-btn" onclick="simulateCrawl()">Simulate crawl</button>
+          <button class="dl-btn" onclick="if(confirm('Clear all tracked events?'))AICS.clear()">Clear events</button>
         </div>
       </div>
     </div>
@@ -721,6 +741,15 @@ table.ev-table tr:hover td{background:rgba(255,255,255,.02)}
 </div>
 </div><!-- /dashboard -->
 
+<script src="shield/shield.js"
+        data-id="AICS-2026-00847"
+        data-owner="AI Copyright Shield Inc."
+        data-mode="meter-and-bill"
+        data-rate="0.001"
+        data-share="0.85"
+        data-licensed="ClaudeBot,Google-Extended,Applebot-Extended"
+        data-terms="ai.txt"
+        data-sw="sw.js"></script>
 <script>
 /* ── PAGE SWITCHING ── */
 function showLanding(){
@@ -730,6 +759,7 @@ function showLanding(){
 function showDashboard(){
   document.getElementById('landing').style.display='none';
   document.getElementById('dashboard').style.display='block';
+  window.scrollTo(0,0);
   initDashboard();
 }
 
@@ -818,137 +848,262 @@ if(globe){
   requestAnimationFrame(drawGlobe);
 }
 
-/* ── LIVE EVENT FEED ── */
-const bots=[
-  {name:'GPTBot/4.0',type:'red',status:'BLOCKED'},
-  {name:'ClaudeBot/1.0',type:'cyan',status:'BILLED'},
-  {name:'Gemini-Extended',type:'cyan',status:'BILLED'},
-  {name:'Meta-ExternalAgent',type:'red',status:'BLOCKED'},
-  {name:'PerplexityBot',type:'amber',status:'PENDING'},
-  {name:'Apple-Applebot',type:'cyan',status:'BILLED'},
-];
-const domains=['techcrunch.io','lawfirm.com','newsroom.net','publisher.org','mediaco.com'];
-let totalEarned=847.30;
+/* ══════════════════════════════════════════
+   AICS INTEGRATION — every view reads the same event store
+   (shield/shield.js: localStorage + BroadcastChannel, optional edge endpoint)
+══════════════════════════════════════════ */
+const STATUS_COLOR={blocked:'red',billed:'cyan',pending:'amber'};
+const CHART_COLORS=['#00e5ff','#ffaa00','#00d68f','#ff3b5c','#4a5570'];
+const DEMO_KEY='aics:demo';
+const CFG_KEY='aics:config';
+let demoOn=true;
+try{demoOn=localStorage.getItem(DEMO_KEY)!=='off'}catch(e){}
 
-function addLandingEvent(){
-  const feed=document.getElementById('eventFeed');
-  if(!feed)return;
-  const bot=bots[Math.floor(Math.random()*bots.length)];
-  const domain=domains[Math.floor(Math.random()*domains.length)];
-  const pages=Math.floor(Math.random()*50+5);
-  const tokens=Math.floor(Math.random()*80000+5000);
-  const amt=(tokens/1000*0.001).toFixed(2);
-  totalEarned+=parseFloat(amt);
-  const isEarn=bot.type!=='amber';
-  const ev=document.createElement('div');
-  ev.className='ev';
-  ev.style.animation='slideUp .4s ease both';
-  ev.innerHTML=`<div class="ev-dot ${bot.type}"></div><div class="ev-info"><div class="ev-name">${bot.name} — ${bot.status}</div><div class="ev-sub">${domain} · ${pages} pages · ${(tokens/1000).toFixed(0)}k tokens · just now</div></div><div class="ev-amt ${isEarn?'':'neg'}">${isEarn?'+$'+amt:'ID\'ing...'}</div>`;
-  feed.insertBefore(ev,feed.firstChild);
-  while(feed.children.length>3)feed.removeChild(feed.lastChild);
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function fmtUSD(n){return '$'+n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}
+function fmtTok(n){return n>=1e6?(n/1e6).toFixed(1)+'M':n>=1e3?(n/1e3).toFixed(0)+'k':String(n)}
+function ago(ts){const s=Math.round((Date.now()-ts)/1000);return s<5?'just now':s<60?s+'s ago':s<3600?Math.round(s/60)+'m ago':Math.round(s/3600)+'h ago'}
+function isToday(ts){return new Date(ts).toDateString()===new Date().toDateString()}
+function botEvents(){return AICS.events().filter(e=>e.status!=='human')}
+
+/* ── Saved shield configuration (Badge Settings) ── */
+function loadCfg(){
+  let saved={};try{saved=JSON.parse(localStorage.getItem(CFG_KEY)||'{}')}catch(e){}
+  Object.assign(AICS.config,saved);
+  if(typeof AICS.config.licensed==='string')AICS.config.licensed=AICS.config.licensed.split(',').map(x=>x.trim().toLowerCase()).filter(Boolean);
 }
-setInterval(addLandingEvent,3200);
+function saveCfg(){
+  const c=AICS.config;
+  c.owner=document.getElementById('cfgOwner').value.trim()||c.owner;
+  c.id=document.getElementById('cfgId').value.trim()||c.id;
+  const r=parseFloat(document.getElementById('cfgRate').value);if(!isNaN(r)&&r>=0)c.rate=r;
+  c.mode=document.getElementById('cfgMode').value;
+  c.licensed=document.getElementById('cfgLicensed').value.split(',').map(x=>x.trim().toLowerCase()).filter(Boolean);
+  try{localStorage.setItem(CFG_KEY,JSON.stringify({owner:c.owner,id:c.id,rate:c.rate,mode:c.mode,licensed:c.licensed}))}catch(e){}
+  renderSetup(false);renderAll();
+}
+function shieldSrc(){return new URL('shield/shield.js',location.href).href}
+function currentSnippet(){return AICS.snippet({src:shieldSrc()})}
 
-/* ── DASHBOARD INIT ── */
-let dashInited=false;
-function initDashboard(){
-  if(dashInited)return;dashInited=true;
-  // Date
-  const d=document.getElementById('dashDate');
-  if(d)d.textContent=new Date().toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
-  // KPI animations
-  setTimeout(()=>{
-    animNum('kRevenue',1247.50,'$','',2,1600);
-    animNum('kTokens',4.2,'','M',1,1800);
-    animNum('kBlocked',312,'','',0,1400);
-  },200);
-  // Month total
-  setTimeout(()=>{
-    const mt=document.getElementById('monthTotal');
-    if(mt){let v=0;const iv=setInterval(()=>{v+=94;if(v>=3750){v=3750;clearInterval(iv)}mt.textContent=v.toLocaleString();},30)}
-  },400);
-  // Revenue bars animate
-  setTimeout(()=>{
-    const bars=[{id:'rb1',w:92},{id:'rb2',w:51},{id:'rb3',w:38},{id:'rb4',w:25}];
-    bars.forEach(b=>{const el=document.getElementById(b.id);if(el){el.style.transition='width 1.4s ease';el.style.width=b.w+'%'}});
-  },600);
-  // Bar chart
-  buildBarChart();
-  // Donut
-  buildDonut();
-  // Live event count
-  let evCount=247;
-  const ecEl=document.getElementById('evCount');
-  if(ecEl)ecEl.textContent=evCount+' events today';
-  setInterval(()=>{
-    evCount+=Math.floor(Math.random()*3+1);
-    if(ecEl)ecEl.textContent=evCount+' events today';
-    // Add table row occasionally
-    addTableRow();
-  },4000);
+/* ── Snippet + downloads ── */
+function renderSnippets(){
+  const sn=currentSnippet();
+  ['landingSnippet','dashSnippet'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=sn});
+}
+function copySnippet(id){
+  const text=currentSnippet();
+  const done=()=>{const el=document.getElementById(id||'landingSnippet');if(!el)return;const o=el.style.borderColor;el.parentNode.style.borderColor='var(--green)';setTimeout(()=>el.parentNode.style.borderColor=o,900)};
+  if(navigator.clipboard)navigator.clipboard.writeText(text).then(done,()=>AICS.download('aics-snippet.html',text,'text/html'));
+  else AICS.download('aics-snippet.html',text,'text/html');
+}
+async function downloadFile(path){
+  if(path==='aics-snippet.html')return AICS.download('aics-snippet.html',currentSnippet(),'text/html');
+  const name=path.split('/').pop();
+  try{
+    const res=await fetch(path,{cache:'no-cache'});
+    if(!res.ok)throw new Error(res.status);
+    let text=await res.text();
+    if(name==='robots.txt'||name==='ai.txt'||name==='llms.txt')text=text.replace(/AICS-2026-00847/g,AICS.config.id).replace(/0\.001 USD/g,AICS.config.rate+' USD');
+    AICS.download(name,text);
+  }catch(e){
+    // file:// pages cannot fetch siblings; fall back to opening the file
+    window.open(path,'_blank');
+  }
 }
 
-function buildBarChart(){
-  const container=document.getElementById('barChart');
-  if(!container)return;
-  const days=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
-  const billed=[88,142,110,198,165,220,247];
-  const pending=[20,35,18,45,30,55,40];
-  const maxVal=Math.max(...billed)+Math.max(...pending);
-  container.innerHTML='';
-  days.forEach((day,i)=>{
-    const billedH=Math.round((billed[i]/maxVal)*110);
-    const pendingH=Math.round((pending[i]/maxVal)*110);
-    const g=document.createElement('div');
-    g.className='bar-group';
-    g.innerHTML=`<div class="bar-wrap">
-      <div class="bar" style="width:14px;height:0px;background:var(--cyan);transition:height 1s ease ${i*0.1}s" data-h="${billedH}"></div>
-      <div class="bar" style="width:8px;height:0px;background:var(--amber);transition:height 1s ease ${i*0.1+0.05}s" data-h="${pendingH}"></div>
-    </div><div class="bar-label">${day}</div>`;
-    container.appendChild(g);
-  });
-  setTimeout(()=>{
-    container.querySelectorAll('.bar').forEach(b=>{b.style.height=b.dataset.h+'px'});
-  },100);
+/* ── Landing live feed (latest crawler events) ── */
+function renderLandingFeed(){
+  const feed=document.getElementById('eventFeed');if(!feed)return;
+  const evs=botEvents().slice(-3).reverse();
+  if(!evs.length)return;
+  feed.innerHTML=evs.map(e=>{
+    const earn=e.status!=='pending';
+    return `<div class="ev"><div class="ev-dot ${STATUS_COLOR[e.status]||'amber'}"></div><div class="ev-info"><div class="ev-name">${esc(e.bot)} — ${e.status.toUpperCase()}</div><div class="ev-sub">${esc(e.domain)} · ${e.pages} pages · ${fmtTok(e.tokens)} tokens · ${ago(e.ts)}</div></div><div class="ev-amt ${earn?'':'neg'}">${earn?'+'+fmtUSD(e.amount):"ID'ing..."}</div></div>`;
+  }).join('');
 }
 
-function buildDonut(){
-  const canvas=document.getElementById('donut');
-  if(!canvas)return;
+/* ── Dashboard rendering ── */
+function renderKPIs(all){
+  const today=all.filter(e=>isToday(e.ts));
+  const st=AICS.stats(today);
+  const set=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v};
+  set('kRevenue',fmtUSD(st.revenue));
+  set('kRevenueSub','owner share '+fmtUSD(st.ownerRevenue)+' ('+Math.round(AICS.config.share*100)+'%)');
+  set('kTokens',fmtTok(st.tokens));
+  set('kTokensSub','billing at $'+AICS.config.rate+'/token');
+  set('kBlocked',st.blocked.toLocaleString());
+  set('kBlockedSub',Object.keys(st.byBot).length+' crawlers seen today');
+  const pages=new Set(all.map(e=>e.domain+e.url)).size;
+  set('kPages',(8420+pages).toLocaleString());
+  set('kPagesSub',st.humanViews+' human views tracked today');
+  set('evCount',st.events+' events today');
+}
+
+function buildBarChart(all){
+  const container=document.getElementById('barChart');if(!container)return;
+  const st=AICS.stats(all);
+  const days=[];
+  for(let i=6;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i);days.push(d)}
+  const rows=days.map(d=>{const k=d.toISOString().slice(0,10);const v=st.byDay[k]||{billed:0,pending:0};return{label:d.toLocaleDateString('en-US',{weekday:'short'}),billed:v.billed,pending:v.pending}});
+  const maxVal=Math.max(1,...rows.map(r=>r.billed+r.pending));
+  container.innerHTML=rows.map(r=>`<div class="bar-group" title="${r.label}: ${fmtUSD(r.billed)} billed · ${fmtUSD(r.pending)} pending"><div class="bar-wrap">
+      <div class="bar" style="width:14px;height:${Math.round(r.billed/maxVal*110)}px;background:var(--cyan);transition:height .6s ease"></div>
+      <div class="bar" style="width:8px;height:${Math.round(r.pending/maxVal*110)}px;background:var(--amber);transition:height .6s ease"></div>
+    </div><div class="bar-label">${r.label}</div></div>`).join('');
+}
+
+function buildDonut(all){
+  const canvas=document.getElementById('donut');if(!canvas)return;
   const ctx=canvas.getContext('2d');
-  const data=[{v:.38,c:'#00e5ff'},{v:.22,c:'#ffaa00'},{v:.18,c:'#00d68f'},{v:.14,c:'#ff3b5c'},{v:.08,c:'#4a5570'}];
-  let start=-Math.PI/2;
-  const cx=60,cy=60,r=50,inner=32;
+  const st=AICS.stats(all);
+  const ranked=Object.values(st.byBot).sort((a,b)=>b.count-a.count);
+  const top=ranked.slice(0,4).map(b=>({name:b.bot,v:b.count}));
+  const other=ranked.slice(4).reduce((n,b)=>n+b.count,0);
+  if(other)top.push({name:'Other',v:other});
+  const total=top.reduce((n,x)=>n+x.v,0)||1;
+  const cx=60,cy=60,r=50,inner=32;let start=-Math.PI/2;
   ctx.clearRect(0,0,120,120);
-  data.forEach(d=>{
-    const end=start+d.v*Math.PI*2;
-    ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,r,start,end);ctx.fillStyle=d.c;ctx.fill();
-    start=end;
-  });
-  // Hollow center
+  if(!top.length){ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.fillStyle='#1a2030';ctx.fill()}
+  top.forEach((d,i)=>{const end=start+d.v/total*Math.PI*2;ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,r,start,end);ctx.fillStyle=CHART_COLORS[i];ctx.fill();start=end});
   ctx.beginPath();ctx.arc(cx,cy,inner,0,Math.PI*2);ctx.fillStyle='#131720';ctx.fill();
-  // Center text
   ctx.fillStyle='#e8edf8';ctx.font='700 14px DM Sans';ctx.textAlign='center';ctx.textBaseline='middle';
   ctx.fillText('Bots',cx,cy-6);
   ctx.fillStyle='#8892aa';ctx.font='400 10px DM Mono';
-  ctx.fillText('5 types',cx,cy+8);
+  ctx.fillText(ranked.length+' types',cx,cy+8);
+  const leg=document.getElementById('donutLegend');
+  if(leg)leg.innerHTML=top.map((d,i)=>`<div class="donut-leg"><div class="donut-leg-dot" style="background:${CHART_COLORS[i]}"></div>${esc(d.name)}<span class="donut-leg-pct">${Math.round(d.v/total*100)}%</span></div>`).join('')||'<div class="donut-leg">No crawlers yet</div>';
 }
 
-function addTableRow(){
-  const tb=document.getElementById('evTable');
-  if(!tb)return;
-  const botList=['GPTBot/4.0','ClaudeBot/1.0','Gemini-Extended','PerplexityBot','Meta-ExternalAgent'];
-  const statuses=['blocked','billed','billed','pending','blocked'];
-  const idx=Math.floor(Math.random()*botList.length);
-  const pages=Math.floor(Math.random()*50+2);
-  const tokens=Math.floor(Math.random()*60000+2000);
-  const amt='$'+(tokens/1000*0.001).toFixed(2);
-  const statLabel=statuses[idx];
-  const tr=document.createElement('tr');
-  tr.innerHTML=`<td>${botList[idx]}</td><td>${pages}</td><td>${(tokens/1000).toFixed(0)}k</td><td><span class="status-pill ${statLabel}">${statLabel.charAt(0).toUpperCase()+statLabel.slice(1)}</span></td><td style="color:var(--${statLabel==='pending'?'amber':'green'});font-family:'DM Mono',monospace">${statLabel==='pending'?"ID'ing":'+'+amt}</td>`;
-  tb.insertBefore(tr,tb.firstChild);
-  while(tb.children.length>6)tb.removeChild(tb.lastChild);
+function renderTable(all){
+  const tb=document.getElementById('evTable');if(!tb)return;
+  const rows=all.filter(e=>e.status!=='human').slice(-8).reverse();
+  tb.innerHTML=rows.length?rows.map(e=>{
+    const pend=e.status==='pending';
+    return `<tr><td title="${esc(e.domain)}">${esc(e.bot)}${e.simulated?'<span class="demo-tag">demo</span>':''}</td><td>${e.pages}</td><td>${fmtTok(e.tokens)}</td><td><span class="status-pill ${e.status}">${e.status[0].toUpperCase()+e.status.slice(1)}</span></td><td style="color:var(--${pend?'amber':'green'});font-family:'DM Mono',monospace">${pend?"ID'ing":'+'+fmtUSD(e.amount)}</td></tr>`;
+  }).join(''):'<tr class="empty-row"><td colspan="5">No crawler events yet. Use “Simulate crawl” or embed the shield on your site.</td></tr>';
 }
+
+function renderRevenue(all){
+  const list=document.getElementById('revList');if(!list)return;
+  const now=new Date();
+  const month=all.filter(e=>{const d=new Date(e.ts);return d.getMonth()===now.getMonth()&&d.getFullYear()===now.getFullYear()});
+  const st=AICS.stats(month);
+  const mt=document.getElementById('monthTotal');if(mt)mt.textContent=st.revenue.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+  const ranked=Object.values(st.byBot).filter(b=>b.amount>0).sort((a,b)=>b.amount-a.amount).slice(0,5);
+  const max=ranked.length?ranked[0].amount:1;
+  const cols=['var(--cyan)','var(--amber)','var(--green)','var(--red)','var(--text3)'];
+  const bgs=['rgba(0,229,255,.1)','rgba(255,170,0,.1)','rgba(0,214,143,.1)','rgba(255,59,92,.1)','rgba(74,85,112,.15)'];
+  list.innerHTML=ranked.length?ranked.map((b,i)=>`<div class="rev-item">
+      <div class="rev-icon" style="background:${bgs[i]};color:${cols[i]}">🤖</div>
+      <div style="flex:1">
+        <div class="rev-name">${esc(b.bot)} / ${esc(b.vendor)}</div>
+        <div class="rev-pages">${b.pages.toLocaleString()} pages · ${fmtTok(b.tokens)} tokens · owner ${fmtUSD(b.amount*AICS.config.share)}</div>
+        <div class="rev-bar-wrap" style="margin-top:6px"><div class="rev-bar" style="width:${Math.round(b.amount/max*100)}%;background:${cols[i]};transition:width .8s ease"></div></div>
+      </div>
+      <div class="rev-amt">${fmtUSD(b.amount)}</div>
+    </div>`).join(''):'<div class="rev-item" style="color:var(--text3);font-size:12px">No billable crawls this month yet.</div>';
+}
+
+function renderRules(){
+  const list=document.getElementById('rulesList');if(!list)return;
+  const c=AICS.config;
+  list.innerHTML=AICS.bots.map(([bot,vendor])=>{
+    const st=AICS.decide({bot,vendor,confidence:'signature'});
+    const label=st==='billed'?'Licensed · billed':'Blocked · invoiced';
+    return `<div class="rule"><div>${esc(bot)}<span class="rule-vendor">${esc(vendor)}</span></div><span class="status-pill ${st}">${label}</span></div>`;
+  }).join('');
+  const lic=AICS.bots.filter(([bot,vendor])=>AICS.decide({bot,vendor,confidence:'signature'})==='billed').length;
+  const rc=document.getElementById('rulesCount');if(rc)rc.textContent=`${lic} licensed · ${AICS.bots.length-lic} blocked · mode ${c.mode}`;
+  const sel=document.getElementById('simBot');
+  if(sel&&!sel.options.length)sel.innerHTML='<option value="">Random crawler</option>'+AICS.bots.map(([b])=>`<option>${esc(b)}</option>`).join('')+'<option value="__unknown">Unknown (headless)</option>';
+}
+
+function renderSetup(fill){
+  const c=AICS.config;
+  if(fill!==false){
+    document.getElementById('cfgOwner').value=c.owner;
+    document.getElementById('cfgId').value=c.id;
+    document.getElementById('cfgRate').value=c.rate;
+    document.getElementById('cfgMode').value=c.mode;
+    document.getElementById('cfgLicensed').value=c.licensed.join(',');
+  }
+  const d=document.getElementById('sbDomain');if(d)d.textContent=c.owner;
+  const i=document.getElementById('sbId');if(i)i.textContent=c.id;
+  renderSnippets();renderRules();
+}
+
+let renderQueued=false;
+function renderAll(){
+  if(renderQueued)return;renderQueued=true;
+  requestAnimationFrame(()=>{
+    renderQueued=false;
+    const all=AICS.events();
+    renderLandingFeed();
+    if(document.getElementById('dashboard').style.display==='block'){
+      renderKPIs(all);buildBarChart(all);buildDonut(all);renderTable(all);renderRevenue(all);
+    }
+  });
+}
+
+/* ── Actions ── */
+function simulateCrawl(){
+  const v=document.getElementById('simBot').value;
+  AICS.simulate(v==='__unknown'?'__none__':(v||undefined));
+}
+function exportReport(){
+  AICS.download('aics-report-'+new Date().toISOString().slice(0,10)+'.csv',AICS.toCSV(),'text/csv');
+}
+function toggleDemo(){
+  demoOn=!demoOn;
+  try{localStorage.setItem(DEMO_KEY,demoOn?'on':'off')}catch(e){}
+  const b=document.getElementById('demoToggle');if(b)b.textContent='Demo traffic: '+(demoOn?'on':'off');
+}
+function navTo(id,el){
+  if(document.getElementById('dashboard').style.display!=='block')showDashboard();
+  document.querySelectorAll('.sb-item').forEach(x=>x.classList.remove('active'));
+  if(el)el.classList.add('active');
+  const t=document.getElementById(id);if(t)t.scrollIntoView({behavior:'smooth',block:'start'});
+}
+function openSetup(){showDashboard();setTimeout(()=>navTo('setupCard'),50)}
+
+/* ── Seed a week of demo history the first time so charts are not empty ── */
+function seedDemo(){
+  if(AICS.events().some(e=>e.status!=='human'))return;
+  const names=['GPTBot','ClaudeBot','Google-Extended','Meta-ExternalAgent','PerplexityBot','Applebot-Extended','CCBot','Bytespider'];
+  const domains=['techcrunch.io','lawfirm.com','newsroom.net','publisher.org','mediaco.com'];
+  for(let day=6;day>=0;day--){
+    const n=6+Math.floor(Math.random()*6)+(6-day);
+    for(let j=0;j<n;j++){
+      const ts=Date.now()-day*864e5-Math.floor(Math.random()*(day?864e5:36e5));
+      AICS.simulate(names[Math.floor(Math.random()*names.length)],{ts,domain:domains[Math.floor(Math.random()*domains.length)]});
+    }
+  }
+}
+
+/* ── Dashboard init ── */
+let dashInited=false;
+function initDashboard(){
+  const d=document.getElementById('dashDate');
+  if(d)d.textContent=new Date().toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  if(!dashInited){
+    dashInited=true;
+    ['cfgOwner','cfgId','cfgRate','cfgMode','cfgLicensed'].forEach(id=>document.getElementById(id).addEventListener('change',saveCfg));
+    const b=document.getElementById('demoToggle');if(b)b.textContent='Demo traffic: '+(demoOn?'on':'off');
+  }
+  renderSetup();renderAll();
+}
+
+/* ── Boot ── */
+loadCfg();
+seedDemo();
+renderSetup();
+renderAll();
+AICS.on(renderAll);
+const domains=['techcrunch.io','lawfirm.com','newsroom.net','publisher.org','mediaco.com'];
+setInterval(()=>{
+  if(demoOn&&!document.hidden)AICS.simulate(undefined,{domain:domains[Math.floor(Math.random()*domains.length)]});
+},4000);
+setInterval(renderLandingFeed,15000);
 </script>
 </body>
 </html>
