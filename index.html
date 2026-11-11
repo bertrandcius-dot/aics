@@ -324,6 +324,26 @@ table.ev-table tr:hover td{background:rgba(255,255,255,.02)}
 .sim-row select{background:var(--bg);border:1px solid var(--border2);border-radius:6px;color:var(--text);padding:6px 8px;font-size:12px}
 .demo-tag{font-family:'DM Mono',monospace;font-size:9px;color:var(--text3);margin-left:4px}
 .empty-row td{color:var(--text3);text-align:center;padding:18px}
+/* ── PHONE LAYOUT ── */
+@media(max-width:700px){
+  nav{padding:0 16px}.nav-links{display:none}.nav-btns .btn-ghost{display:none}
+  .hero{padding:96px 16px 48px}.section{padding-left:16px;padding-right:16px}
+  .dash-main{padding:24px 16px}.dash-header{flex-wrap:wrap;gap:12px}.dash-actions{flex-wrap:wrap}
+  .table-card{overflow-x:auto}.compare-inner{overflow-x:auto}
+  .kpi-row{grid-template-columns:1fr}.steps-grid{grid-template-columns:1fr}
+  footer{flex-direction:column;gap:10px;padding:24px 16px}
+  .badge-demo{padding-left:16px;padding-right:16px}
+}
+/* ── FILE VIEWER ── */
+.fv-backdrop{position:fixed;inset:0;z-index:2147483100;background:rgba(7,9,15,.78);display:flex;align-items:center;justify-content:center;padding:24px 16px}
+.fv-backdrop[hidden]{display:none}
+.fv{background:var(--surface);border:1px solid var(--border2);border-radius:12px;width:min(820px,100%);max-height:86vh;display:flex;flex-direction:column;min-width:0}
+.fv-head{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 16px;border-bottom:1px solid var(--border);flex-wrap:wrap}
+.fv-name{font-family:'DM Mono',monospace;font-size:13px;color:var(--cyan)}
+.fv-actions{display:flex;gap:8px}
+.fv pre{margin:0;padding:16px;overflow:auto;font:12px/1.6 'DM Mono',monospace;color:var(--text2);white-space:pre}
+.fv-status{font-family:'DM Mono',monospace;font-size:11px;color:var(--green);min-height:14px}
+.dl-btn:focus-visible,.btn-ghost:focus-visible,.btn-cyan:focus-visible,.plan-btn:focus-visible,.sb-item:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
 @media(max-width:960px){.setup-row{grid-template-columns:1fr}.field-grid{grid-template-columns:1fr}.hero-grid{grid-template-columns:1fr}.hero-right{display:none}.steps-grid{grid-template-columns:1fr 1fr}.pricing-grid{grid-template-columns:1fr}.badge-demo-card{grid-template-columns:1fr}.charts-row{grid-template-columns:1fr}.bottom-row{grid-template-columns:1fr}.dash-layout{grid-template-columns:1fr}.sidebar{display:none}.kpi-row{grid-template-columns:1fr 1fr}}
 </style>
 </head>
@@ -508,7 +528,7 @@ table.ev-table tr:hover td{background:rgba(255,255,255,.02)}
       <div class="plan-feature"><div class="dot"></div>Private cloud storage & SOC 2 compliance</div>
       <div class="plan-feature"><div class="dot"></div>99.9% uptime SLA</div>
       <div class="plan-feature"><div class="dot"></div>White-label badge option</div>
-      <button class="plan-btn" onclick="location.href='ai.txt'">View licence terms →</button>
+      <button class="plan-btn" onclick="downloadFile('ai.txt')">View licence terms →</button>
     </div>
   </div>
 </div>
@@ -592,7 +612,7 @@ table.ev-table tr:hover td{background:rgba(255,255,255,.02)}
       <div class="sb-label">Protection</div>
       <div class="sb-item" onclick="navTo('rulesCard',this)"><span class="sb-icon">🤖</span>Bot Rules</div>
       <div class="sb-item" onclick="navTo('setupCard',this)"><span class="sb-icon">⊗</span>Badge Settings</div>
-      <div class="sb-item" onclick="window.open('ai.txt','_blank')"><span class="sb-icon">📋</span>Legal Docs</div>
+      <div class="sb-item" onclick="downloadFile('ai.txt')"><span class="sb-icon">📋</span>Legal Docs</div>
       <div class="sb-item" onclick="navTo('setupCard',this)"><span class="sb-icon">🔗</span>API Keys</div>
     </div>
     <div class="sb-section">
@@ -733,13 +753,28 @@ table.ev-table tr:hover td{background:rgba(255,255,255,.02)}
         <div class="sim-row">
           <select id="simBot" aria-label="Crawler to simulate"></select>
           <button class="dl-btn" onclick="simulateCrawl()">Simulate crawl</button>
-          <button class="dl-btn" onclick="if(confirm('Clear all tracked events?'))AICS.clear()">Clear events</button>
+          <button class="dl-btn" id="clearBtn" onclick="clearEvents(this)">Clear events</button>
         </div>
       </div>
     </div>
   </main>
 </div>
 </div><!-- /dashboard -->
+
+<div class="fv-backdrop" id="fileViewer" hidden onclick="if(event.target===this)closeFile()">
+  <div class="fv" role="dialog" aria-modal="true" aria-labelledby="fvName">
+    <div class="fv-head">
+      <div class="fv-name" id="fvName">file</div>
+      <div class="fv-status" id="fvStatus" aria-live="polite"></div>
+      <div class="fv-actions">
+        <button class="dl-btn" onclick="copyFile()">Copy</button>
+        <button class="dl-btn" onclick="saveFile()">Download</button>
+        <button class="dl-btn" onclick="closeFile()" aria-label="Close">✕</button>
+      </div>
+    </div>
+    <pre id="fvBody"></pre>
+  </div>
+</div>
 
 <script src="shield/shield.js"
         data-id="AICS-2026-00847"
@@ -893,22 +928,41 @@ function renderSnippets(){
 function copySnippet(id){
   const text=currentSnippet();
   const done=()=>{const el=document.getElementById(id||'landingSnippet');if(!el)return;const o=el.style.borderColor;el.parentNode.style.borderColor='var(--green)';setTimeout(()=>el.parentNode.style.borderColor=o,900)};
-  if(navigator.clipboard)navigator.clipboard.writeText(text).then(done,()=>AICS.download('aics-snippet.html',text,'text/html'));
-  else AICS.download('aics-snippet.html',text,'text/html');
+  const sel=()=>{const el=document.getElementById(id||'landingSnippet');if(!el)return;const r=document.createRange();r.selectNodeContents(el);getSelection().removeAllRanges();getSelection().addRange(r)};
+  if(navigator.clipboard)navigator.clipboard.writeText(text).then(done,sel);else sel();
 }
+let fvFile={name:'',text:'',type:'text/plain'};
 async function downloadFile(path){
-  if(path==='aics-snippet.html')return AICS.download('aics-snippet.html',currentSnippet(),'text/html');
-  const name=path.split('/').pop();
-  try{
-    const res=await fetch(path,{cache:'no-cache'});
-    if(!res.ok)throw new Error(res.status);
-    let text=await res.text();
-    if(name==='robots.txt'||name==='ai.txt'||name==='llms.txt')text=text.replace(/AICS-2026-00847/g,AICS.config.id).replace(/0\.001 USD/g,AICS.config.rate+' USD');
-    AICS.download(name,text);
-  }catch(e){
-    // file:// pages cannot fetch siblings; fall back to opening the file
-    window.open(path,'_blank');
+  let name=path.split('/').pop(),text,type='text/plain';
+  if(path==='aics-snippet.html'){text=currentSnippet();type='text/html'}
+  else{
+    try{
+      const res=await fetch(path,{cache:'no-cache'});
+      if(!res.ok)throw new Error('HTTP '+res.status);
+      text=await res.text();
+      if(/^(robots|ai|llms)\.txt$/.test(name))text=text.replace(/AICS-2026-00847/g,AICS.config.id).replace(/0\.001 USD/g,AICS.config.rate+' USD');
+      if(name.endsWith('.js'))type='text/javascript';else if(name.endsWith('.json'))type='application/json';
+    }catch(e){text='Could not load '+path+' ('+e.message+'). Serve the site over http(s) to view this file.'}
   }
+  fvFile={name,text,type};
+  document.getElementById('fvName').textContent=path;
+  document.getElementById('fvBody').textContent=text;
+  document.getElementById('fvStatus').textContent='';
+  document.getElementById('fileViewer').hidden=false;
+}
+function closeFile(){document.getElementById('fileViewer').hidden=true}
+function saveFile(){AICS.download(fvFile.name,fvFile.text,fvFile.type);document.getElementById('fvStatus').textContent='Download started'}
+function copyFile(){
+  const st=document.getElementById('fvStatus');
+  const fallback=()=>{const r=document.createRange();r.selectNodeContents(document.getElementById('fvBody'));const sel=getSelection();sel.removeAllRanges();sel.addRange(r);st.textContent='Selected · press Ctrl/⌘+C'};
+  if(navigator.clipboard)navigator.clipboard.writeText(fvFile.text).then(()=>st.textContent='Copied',fallback);else fallback();
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeFile()});
+let clearArmed=null;
+function clearEvents(btn){
+  if(clearArmed){clearTimeout(clearArmed);clearArmed=null;AICS.clear();btn.textContent='Cleared';setTimeout(()=>btn.textContent='Clear events',1500);return}
+  btn.textContent='Click again to clear';
+  clearArmed=setTimeout(()=>{clearArmed=null;btn.textContent='Clear events'},3000);
 }
 
 /* ── Landing live feed (latest crawler events) ── */

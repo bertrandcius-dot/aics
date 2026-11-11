@@ -46,3 +46,12 @@ robots.txt, ai.txt and meta tags are signals that compliant crawlers honour; the
 crawlers that ignore them. `shield.js` only sees crawlers that execute JavaScript. Use `edge/worker.js` (or
 equivalent server middleware) to enforce blocking and billing on raw HTML requests. Dashboard data in this
 repo is local to the browser and includes simulated demo traffic (toggle with **Demo traffic**).
+
+## Review build
+
+```bash
+python3 tools/build_review.py dist/review
+```
+
+Produces a bundle of the app for sandboxed preview hosts (for example a claude.ai Artifact): the document
+skeleton is stripped, the service worker is not registered, and the shield and policy files are copied alongside.
