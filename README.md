@@ -14,6 +14,33 @@ Detect AI crawlers, block or meter them per token, and show a copyright watermar
 | `sw.js` | Service worker that caches the shield and policy files (stale-while-revalidate) |
 | `_headers` | `X-Robots-Tag: noai`, TDM and cache headers for Netlify / Cloudflare Pages |
 | `edge/worker.js` | Cloudflare Worker: 402 for unlicensed AI crawlers, per-token billing for licensed ones, event ingest |
+| `app/app.js` | Hash router and workflow features: onboarding, registry, install check, API keys, invoices & payouts, legal docs, account, contact |
+| `app/billing.js` | Pure invoicing and payout logic (browser + Node) |
+| `app/legal.js` | ToS AI addendum and unlicensed-use notice templates |
+| `app/store.js` | Persisted workspace state (account, keys, invoices, payouts, requests) |
+| `app/app.css` | Styles for routed pages and dashboard panels |
+| `tests/` | Unit tests (`npm test`) and end-to-end workflow check (`npm run e2e`) |
+
+## Pages and routes
+
+Every button and link routes to a page or section, and each has a shareable hash link.
+
+| Area | Routes |
+| --- | --- |
+| Landing | `#home` `#how` `#compare` `#pricing` `#install` |
+| Public pages | `#get-started` `#registry` `#docs` `#legal` `#contact` |
+| Dashboard | `#dashboard` `#events` `#analytics` `#revenue` `#billing` `#rules` `#badge` `#verify` `#api-keys` `#legal-docs` `#account` |
+
+## Workflow
+
+1. **Get started**: register a domain, receive a licence ID, pick plan, rate, mode and licensed crawlers.
+2. **Install**: copy the generated snippet and policy files.
+3. **Verify**: the install check tests page source and robots.txt (paste, URL, or this app).
+4. **License**: issue a key per paying crawler in API Keys; export the edge worker secret.
+5. **Track**: crawler hits appear in Live Events, Analytics and Revenue.
+6. **Bill**: generate monthly invoices per AI vendor, send them, mark them paid.
+7. **Get paid**: request a payout of your share to the method saved in Account.
+8. **Enforce**: generate a ToS AI addendum or an unlicensed-use notice from your logs.
 
 ## Embed
 

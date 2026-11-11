@@ -1,0 +1,129 @@
+/* ⊗ AICS — styles for routed pages and workflow panels.
+   Builds on the tokens and components defined in index.html (--bg, --surface, --cyan, …). */
+
+/* Routed pages sit below the fixed 64px nav */
+.page{padding-top:64px;min-height:100vh}
+.page[hidden]{display:none}
+[id]{scroll-margin-top:84px}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* Nav + sidebar as real links */
+.nav-links a.active{color:var(--cyan)}
+a.sb-item{text-decoration:none}
+.foot-links{display:flex;flex-wrap:wrap;gap:6px 18px;font-family:'DM Mono',monospace;font-size:11px}
+.foot-links a{color:var(--text2);text-decoration:none}
+.foot-links a:hover{color:var(--cyan)}
+footer{flex-wrap:wrap;gap:16px}
+
+/* Dashboard section tabs (shown when the sidebar is hidden) */
+.dash-tabs{display:none;gap:6px;overflow-x:auto;margin:-12px 0 20px;padding-bottom:4px;scrollbar-width:none}
+.dash-tabs::-webkit-scrollbar{display:none}
+.dash-tabs a{flex-shrink:0;padding:7px 12px;border:1px solid var(--border2);border-radius:100px;font-size:12px;color:var(--text2);text-decoration:none;white-space:nowrap}
+.dash-tabs a.active{border-color:var(--cyan);color:var(--cyan);background:rgba(0,229,255,.08)}
+@media(max-width:960px){.dash-tabs{display:flex}}
+
+/* Panels and forms */
+.wide-card{margin-top:16px}
+.panel{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px;margin-top:20px;min-width:0}
+.panel-lead{font-size:14px;color:var(--text2);line-height:1.7;margin-bottom:16px}
+.panel-lead b{color:var(--text)}
+.field textarea{background:var(--bg);border:1px solid var(--border2);border-radius:6px;color:var(--text);padding:8px 10px;font-family:'DM Mono',monospace;font-size:12px;resize:vertical;width:100%}
+.field textarea:focus{outline:none;border-color:var(--cyan)}
+.chk{display:flex;gap:8px;align-items:center;font-size:12px;color:var(--text2);margin-bottom:12px}
+.inline-form .btn-cyan{margin-bottom:16px}
+.form-status{font-family:'DM Mono',monospace;font-size:11px;color:var(--green);align-self:center}
+.form-status.err{color:var(--red)}
+.head-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.head-actions select,.mini-select{background:var(--bg);border:1px solid var(--border2);border-radius:6px;color:var(--text);padding:6px 8px;font-size:12px}
+.mini-select{margin-top:6px;max-width:100%}
+.table-card-head{flex-wrap:wrap;gap:8px}
+.table-scroll{overflow-x:auto}
+.btn-cyan:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.dl-btn.danger:hover{border-color:var(--red);color:var(--red)}
+.empty{padding:16px 0;font-size:12px;color:var(--text3)}
+.empty a{color:var(--cyan)}
+
+/* Lists (keys, payouts, documents, registry) */
+.list{display:flex;flex-direction:column}
+.list-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid var(--border);font-size:13px}
+.list-row:last-child{border-bottom:none}
+.list-row.muted{opacity:.55}
+.lr-main{min-width:0;flex:1}
+.lr-sub{font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);margin-top:3px;overflow-wrap:anywhere}
+.lr-actions{display:flex;gap:6px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+code.key{display:inline-block;font-family:'DM Mono',monospace;font-size:11px;color:var(--cyan);margin-top:4px}
+#billingCard > .list,#keysCard .list{padding:0 20px}
+#keysCard .setup-body .list{padding:0}
+.tag{font-family:'DM Mono',monospace;font-size:9px;padding:2px 7px;border-radius:100px;background:rgba(0,229,255,.1);color:var(--cyan);border:1px solid rgba(0,229,255,.25);vertical-align:middle}
+.tag.muted{background:var(--surface2);color:var(--text3);border-color:var(--border2)}
+
+/* Billing */
+.bill-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;padding:16px 20px;border-bottom:1px solid var(--border)}
+.bill-val{font-family:'Bebas Neue',cursive;font-size:28px;letter-spacing:1px;color:var(--text);font-variant-numeric:tabular-nums}
+.amber-t{color:var(--amber)}.green-t{color:var(--green)}.cyan-t{color:var(--cyan)}
+.row-acts{display:flex;gap:6px;flex-wrap:wrap}
+.row-acts .dl-btn{padding:4px 9px;font-size:11px}
+.payout-note{flex:1;min-width:200px;font-size:12px;color:var(--text2)}
+#billingCard .ev-table td,#billingCard .ev-table th{white-space:nowrap}
+
+/* Install check */
+.search-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}
+.search-row input{flex:1;min-width:0;background:var(--bg);border:1px solid var(--border2);border-radius:8px;color:var(--text);padding:12px 14px;font-size:14px;font-family:'DM Sans',sans-serif}
+.search-row input:focus{outline:none;border-color:var(--cyan)}
+.search-row.tight{margin-bottom:0}
+.search-row.tight input{padding:8px 10px;font-size:13px}
+.checklist{list-style:none;margin-top:14px;display:flex;flex-direction:column;gap:6px}
+.checklist li{display:flex;gap:10px;font-size:12px;color:var(--text2);align-items:flex-start}
+.checklist .tick{width:18px;height:18px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:10px;flex-shrink:0;background:var(--surface3);color:var(--text2)}
+.checklist li.ok .tick{background:rgba(0,214,143,.15);color:var(--green)}
+.checklist li.bad .tick{background:rgba(255,59,92,.15);color:var(--red)}
+.checklist .hint{font-family:'DM Mono',monospace;font-size:10px;color:var(--text3);margin-top:2px}
+.check-head{font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:var(--text3);margin-bottom:4px}
+
+/* Onboarding wizard */
+.wizard{list-style:none;display:flex;gap:10px;flex-wrap:wrap;counter-reset:step}
+.wizard li{counter-increment:step;display:flex;align-items:center;gap:8px;padding:8px 14px;border:1px solid var(--border2);border-radius:100px;font-size:13px;color:var(--text3)}
+.wizard li::before{content:counter(step);width:20px;height:20px;border-radius:50%;background:var(--surface3);display:inline-flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:10px}
+.wizard li.on{border-color:var(--cyan);color:var(--cyan)}
+.wizard li.on::before{background:var(--cyan);color:var(--bg)}
+.wizard li.done{color:var(--green);border-color:rgba(0,214,143,.4)}
+.wizard li.done::before{content:'✓';background:rgba(0,214,143,.2);color:var(--green)}
+.panel[hidden]{display:none}
+
+/* Registry */
+.registry-list{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:4px 20px}
+.reg-domain{font-size:15px;font-weight:600;color:var(--text)}
+
+/* Docs */
+.docs-layout{display:grid;grid-template-columns:200px minmax(0,1fr);gap:48px;align-items:start}
+.docs-toc{position:sticky;top:96px;display:flex;flex-direction:column;gap:2px}
+.docs-toc button{background:none;border:none;text-align:left;color:var(--text2);font-family:'DM Sans',sans-serif;font-size:13px;padding:7px 12px;border-radius:6px;cursor:pointer}
+.docs-toc button:hover{background:var(--surface2);color:var(--text)}
+.docs-body{min-width:0;max-width:760px;font-size:14px;line-height:1.75;color:var(--text2)}
+.docs-body h3{font-family:'Bebas Neue',cursive;font-size:28px;letter-spacing:1.5px;color:var(--text);margin:44px 0 12px}
+.docs-body p,.docs-body ul,.docs-body ol{margin-bottom:14px}
+.docs-body ul,.docs-body ol{padding-left:20px}
+.docs-body li{margin-bottom:6px}
+.docs-body a,.step-body a{color:var(--cyan);text-decoration:none}
+.docs-body a:hover,.step-body a:hover{text-decoration:underline}
+.docs-body code,.step-body code,.panel-lead code{font-family:'DM Mono',monospace;font-size:12px;color:var(--text);background:var(--surface2);padding:1px 5px;border-radius:4px}
+.docs-body .code-box{margin:12px 0 18px;overflow-x:auto}
+.docs-body .code-box pre{white-space:pre}
+.doc-table{width:100%;border-collapse:collapse;font-size:12px;margin:8px 0 16px}
+.doc-table th{text-align:left;font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--text3);padding:8px 10px;border-bottom:1px solid var(--border)}
+.doc-table td{padding:8px 10px;border-bottom:1px solid var(--border);vertical-align:top}
+.legal-grid{margin-bottom:8px}
+.legal-grid .step-title{font-size:16px;margin-bottom:8px}
+
+@media(max-width:960px){
+  .docs-layout{grid-template-columns:1fr;gap:20px}
+  .docs-toc{position:static;flex-direction:row;flex-wrap:wrap}
+  .bill-kpis{grid-template-columns:1fr 1fr}
+}
+@media(max-width:700px){
+  .page .section{padding-top:48px}
+  .panel{padding:18px}
+  .list-row{flex-wrap:wrap}
+  .lr-actions{justify-content:flex-start}
+}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
