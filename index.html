@@ -41,7 +41,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
 
 /* ── NAV ── */
-nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:64px;border-bottom:1px solid var(--border);background:rgba(7,9,15,.92);backdrop-filter:blur(12px)}
+body>nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:64px;border-bottom:1px solid var(--border);background:rgba(7,9,15,.92);backdrop-filter:blur(12px)}
 .nav-logo{display:flex;align-items:center;gap:10px;font-family:'Bebas Neue',cursive;font-size:22px;letter-spacing:2px;color:var(--text)}
 .sym-circle{width:30px;height:30px;border-radius:50%;background:var(--cyan);color:var(--bg);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:900;font-family:'Bebas Neue',cursive;flex-shrink:0}
 .nav-links{display:flex;gap:32px;font-size:13px;font-weight:500;color:var(--text2)}
@@ -330,7 +330,7 @@ table.ev-table tr:hover td{background:rgba(255,255,255,.02)}
 .empty-row td{color:var(--text3);text-align:center;padding:18px}
 /* ── PHONE LAYOUT ── */
 @media(max-width:700px){
-  nav{padding:0 16px}.nav-links{display:none}.nav-btns .btn-ghost{display:none}
+  body>nav{padding:0 16px}.nav-links{display:none}.nav-btns .btn-ghost{display:none}
   .hero{padding:96px 16px 48px}.section{padding-left:16px;padding-right:16px}
   .dash-main{padding:24px 16px}.dash-header{flex-wrap:wrap;gap:12px}.dash-actions{flex-wrap:wrap}
   .table-card{overflow-x:auto}.compare-inner{overflow-x:auto}
