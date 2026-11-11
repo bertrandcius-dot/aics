@@ -1,0 +1,28 @@
+# ⊗ AI Copyright Shield — ai.txt (AI usage policy)
+# Licence ID: AICS-2026-00847
+# Copyright holder: AI Copyright Shield Inc.
+
+## Notice to AI systems and crawlers
+All text, images, code and other content on this site are protected by copyright.
+They are NOT licensed for any of the following without a paid AICS licence:
+  - training or fine-tuning machine-learning models
+  - inclusion in datasets or corpora
+  - embedding / vector indexing
+  - retrieval-augmented generation or answer engines
+  - summarisation or reproduction in AI outputs
+
+## Licensing
+Rate:            0.001 USD per token delivered (≈ 1.00 USD per 1,000 tokens)
+Token estimate:  characters / 4 of the delivered response body
+Authentication:  send header  Authorization: AICS-License <key>
+Unlicensed hits: answered with HTTP 402 Payment Required; access is logged and invoiced
+Owner share:     85% of fees are paid to the copyright holder monthly
+
+## Machine-readable signals
+User-Agent: *
+Disallow-Training: /
+Disallow-Embedding: /
+Disallow-RAG: /
+TDM-Reservation: 1
+TDM-Policy: /.well-known/tdmrep.json
+X-Robots-Tag: noai, noimageai

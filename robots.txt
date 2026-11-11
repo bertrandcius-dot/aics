@@ -1,0 +1,52 @@
+# ⊗ AI Copyright Shield — robots.txt
+# Licence ID: AICS-2026-00847
+#
+# Search engines may index this site. AI training, fine-tuning, embedding and
+# retrieval crawlers may NOT access it without a paid AICS licence.
+# Licence terms (machine readable): /ai.txt  ·  /llms.txt  ·  /.well-known/tdmrep.json
+# Licensed crawlers authenticate with:  Authorization: AICS-License <key>
+# Unlicensed access is logged, metered at 0.001 USD/token and invoiced.
+
+# ── AI training / retrieval crawlers: blocked ──
+User-agent: GPTBot
+User-agent: ChatGPT-User
+User-agent: OAI-SearchBot
+User-agent: ClaudeBot
+User-agent: Claude-Web
+User-agent: Claude-User
+User-agent: anthropic-ai
+User-agent: Google-Extended
+User-agent: GoogleOther
+User-agent: Meta-ExternalAgent
+User-agent: Meta-ExternalFetcher
+User-agent: FacebookBot
+User-agent: PerplexityBot
+User-agent: Perplexity-User
+User-agent: Applebot-Extended
+User-agent: Amazonbot
+User-agent: Bytespider
+User-agent: CCBot
+User-agent: cohere-ai
+User-agent: cohere-training-data-crawler
+User-agent: MistralAI-User
+User-agent: YouBot
+User-agent: DuckAssistBot
+User-agent: Diffbot
+User-agent: Timpibot
+User-agent: ImagesiftBot
+User-agent: omgili
+User-agent: AI2Bot
+User-agent: Kangaroo Bot
+User-agent: PetalBot
+Disallow: /
+# Policy files stay readable so crawlers can learn how to obtain a licence
+Allow: /robots.txt
+Allow: /ai.txt
+Allow: /llms.txt
+Allow: /.well-known/tdmrep.json
+
+# ── Everyone else (search engines, humans' browsers) ──
+User-agent: *
+Allow: /
+Disallow: /aics/
+
