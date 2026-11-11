@@ -10,6 +10,7 @@
 <meta name="tdm-policy" content="ai.txt">
 <meta name="ai-rights" content="protected; id=AICS-2026-00847; rate=0.001USD/token; terms=ai.txt">
 <link rel="license" href="ai.txt">
+<link rel="stylesheet" href="app/app.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -324,6 +325,26 @@ table.ev-table tr:hover td{background:rgba(255,255,255,.02)}
 .sim-row select{background:var(--bg);border:1px solid var(--border2);border-radius:6px;color:var(--text);padding:6px 8px;font-size:12px}
 .demo-tag{font-family:'DM Mono',monospace;font-size:9px;color:var(--text3);margin-left:4px}
 .empty-row td{color:var(--text3);text-align:center;padding:18px}
+/* ── PHONE LAYOUT ── */
+@media(max-width:700px){
+  nav{padding:0 16px}.nav-links{display:none}.nav-btns .btn-ghost{display:none}
+  .hero{padding:96px 16px 48px}.section{padding-left:16px;padding-right:16px}
+  .dash-main{padding:24px 16px}.dash-header{flex-wrap:wrap;gap:12px}.dash-actions{flex-wrap:wrap}
+  .table-card{overflow-x:auto}.compare-inner{overflow-x:auto}
+  .kpi-row{grid-template-columns:1fr}.steps-grid{grid-template-columns:1fr}
+  footer{flex-direction:column;gap:10px;padding:24px 16px}
+  .badge-demo{padding-left:16px;padding-right:16px}
+}
+/* ── FILE VIEWER ── */
+.fv-backdrop{position:fixed;inset:0;z-index:2147483100;background:rgba(7,9,15,.78);display:flex;align-items:center;justify-content:center;padding:24px 16px}
+.fv-backdrop[hidden]{display:none}
+.fv{background:var(--surface);border:1px solid var(--border2);border-radius:12px;width:min(820px,100%);max-height:86vh;display:flex;flex-direction:column;min-width:0}
+.fv-head{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 16px;border-bottom:1px solid var(--border);flex-wrap:wrap}
+.fv-name{font-family:'DM Mono',monospace;font-size:13px;color:var(--cyan)}
+.fv-actions{display:flex;gap:8px}
+.fv pre{margin:0;padding:16px;overflow:auto;font:12px/1.6 'DM Mono',monospace;color:var(--text2);white-space:pre}
+.fv-status{font-family:'DM Mono',monospace;font-size:11px;color:var(--green);min-height:14px}
+.dl-btn:focus-visible,.btn-ghost:focus-visible,.btn-cyan:focus-visible,.plan-btn:focus-visible,.sb-item:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
 @media(max-width:960px){.setup-row{grid-template-columns:1fr}.field-grid{grid-template-columns:1fr}.hero-grid{grid-template-columns:1fr}.hero-right{display:none}.steps-grid{grid-template-columns:1fr 1fr}.pricing-grid{grid-template-columns:1fr}.badge-demo-card{grid-template-columns:1fr}.charts-row{grid-template-columns:1fr}.bottom-row{grid-template-columns:1fr}.dash-layout{grid-template-columns:1fr}.sidebar{display:none}.kpi-row{grid-template-columns:1fr 1fr}}
 </style>
 </head>
@@ -336,14 +357,14 @@ table.ev-table tr:hover td{background:rgba(255,255,255,.02)}
     AICS
   </div>
   <div class="nav-links">
-    <a onclick="showLanding()">Product</a>
-    <a>Registry</a>
-    <a>Docs</a>
-    <a>Legal</a>
+    <a href="#home" data-route="home">Product</a>
+    <a href="#registry" data-route="registry">Registry</a>
+    <a href="#docs" data-route="docs">Docs</a>
+    <a href="#legal" data-route="legal">Legal</a>
   </div>
   <div class="nav-btns">
-    <button class="btn-ghost" onclick="showLanding()">Home</button>
-    <button class="btn-cyan" onclick="showDashboard()">Open Dashboard →</button>
+    <button class="btn-ghost" onclick="go('home')">Home</button>
+    <button class="btn-cyan" onclick="go('dashboard')">Open Dashboard →</button>
   </div>
 </nav>
 
@@ -361,7 +382,7 @@ table.ev-table tr:hover td{background:rgba(255,255,255,.02)}
       <p class="hero-sub">The world's first metered licensing infrastructure for AI training data. Detect every LLM crawler, charge per token, and display the ⊗ symbol that makes your website legally protected.</p>
       <div class="hero-ctas">
         <button class="btn-large-cyan" onclick="showDashboard()">Open Live Dashboard →</button>
-        <button class="btn-large-ghost" onclick="document.getElementById('install').scrollIntoView({behavior:'smooth'})">Install the Shield</button>
+        <button class="btn-large-ghost" onclick="go('install')">Install the Shield</button>
       </div>
       <div class="hero-stats">
         <div>
@@ -416,7 +437,7 @@ table.ev-table tr:hover td{background:rgba(255,255,255,.02)}
 </div>
 
 <!-- HOW IT WORKS -->
-<div class="section">
+<div class="section" id="how">
   <div class="sec-label">How it works</div>
   <h2 class="sec-h2">FOUR STEPS TO<br>PROTECTED REVENUE</h2>
   <p class="sec-sub">From installation to first payout in under 60 seconds. No server changes required.</p>
@@ -449,7 +470,7 @@ table.ev-table tr:hover td{background:rgba(255,255,255,.02)}
 </div>
 
 <!-- COMPARE TABLE -->
-<div class="compare-section">
+<div class="compare-section" id="compare">
   <div class="compare-inner">
     <div class="sec-label">Competitive landscape</div>
     <h2 class="sec-h2" style="font-size:40px">WHY NOTHING ELSE<br>COMES CLOSE</h2>
@@ -467,7 +488,7 @@ table.ev-table tr:hover td{background:rgba(255,255,255,.02)}
 </div>
 
 <!-- PRICING -->
-<div class="section">
+<div class="section" id="pricing">
   <div class="sec-label">Pricing</div>
   <h2 class="sec-h2">START EARNING<br>FROM DAY ONE</h2>
   <p class="sec-sub">Subscribe to protect your domain. AI companies pay per token — you keep 80–85%.</p>
@@ -482,7 +503,7 @@ table.ev-table tr:hover td{background:rgba(255,255,255,.02)}
       <div class="plan-feature"><div class="dot"></div>Monthly scrape report with bot breakdown</div>
       <div class="plan-feature"><div class="dot"></div>AI Rights Registry listing</div>
       <div class="plan-feature"><div class="dot"></div>80% revenue share on all scraping fees</div>
-      <button class="plan-btn" onclick="openSetup()">Get started free →</button>
+      <button class="plan-btn" onclick="startPlan('starter')">Get started free →</button>
     </div>
     <div class="plan featured">
       <div class="plan-tier">Pro</div>
@@ -495,7 +516,7 @@ table.ev-table tr:hover td{background:rgba(255,255,255,.02)}
       <div class="plan-feature"><div class="dot"></div>Auto-generated legal ToS addendum</div>
       <div class="plan-feature"><div class="dot"></div>DMCA 1201 enforcement package</div>
       <div class="plan-feature"><div class="dot"></div>85% revenue share</div>
-      <button class="plan-btn" onclick="showDashboard()">Open dashboard →</button>
+      <button class="plan-btn" onclick="go('dashboard')">Open dashboard →</button>
     </div>
     <div class="plan">
       <div class="plan-tier">Enterprise</div>
@@ -508,7 +529,7 @@ table.ev-table tr:hover td{background:rgba(255,255,255,.02)}
       <div class="plan-feature"><div class="dot"></div>Private cloud storage & SOC 2 compliance</div>
       <div class="plan-feature"><div class="dot"></div>99.9% uptime SLA</div>
       <div class="plan-feature"><div class="dot"></div>White-label badge option</div>
-      <button class="plan-btn" onclick="location.href='ai.txt'">View licence terms →</button>
+      <button class="plan-btn" onclick="go('contact')">Contact sales →</button>
     </div>
   </div>
 </div>
@@ -530,6 +551,10 @@ table.ev-table tr:hover td{background:rgba(255,255,255,.02)}
         <button class="dl-btn" onclick="downloadFile('.well-known/tdmrep.json')">⬇ tdmrep.json</button>
         <button class="dl-btn" onclick="downloadFile('sw.js')">⬇ sw.js (cache)</button>
         <button class="dl-btn" onclick="downloadFile('edge/worker.js')">⬇ edge worker</button>
+      </div>
+      <div class="dl-row">
+        <button class="btn-cyan" onclick="startPlan('pro')">Register your domain →</button>
+        <button class="btn-ghost" onclick="go('docs')">Read the docs →</button>
       </div>
     </div>
     <div class="website-mockup">
@@ -562,7 +587,10 @@ table.ev-table tr:hover td{background:rgba(255,255,255,.02)}
 
 <footer>
   <div class="foot-left">© 2026 AI Copyright Shield Inc. · AICS Registry · All rights reserved.</div>
-  <div class="foot-badge"><a href="robots.txt" style="color:inherit">robots.txt</a> · <a href="ai.txt" style="color:inherit">ai.txt</a> · <a href="llms.txt" style="color:inherit">llms.txt</a></div>
+  <nav class="foot-links" aria-label="Footer">
+    <a href="#get-started">Get started</a><a href="#pricing">Pricing</a><a href="#registry">Registry</a><a href="#docs">Docs</a><a href="#legal">Legal</a><a href="#contact">Contact sales</a>
+  </nav>
+  <div class="foot-badge"><a href="robots.txt" data-file="robots.txt" style="color:inherit">robots.txt</a> · <a href="ai.txt" data-file="ai.txt" style="color:inherit">ai.txt</a> · <a href="llms.txt" data-file="llms.txt" style="color:inherit">llms.txt</a></div>
 </footer>
 
 </div><!-- /landing -->
@@ -579,26 +607,28 @@ table.ev-table tr:hover td{background:rgba(255,255,255,.02)}
     <div class="sb-domain">
       <div class="sb-domain-url" id="sbDomain">techcrunch.io</div>
       <div class="sb-domain-id" id="sbId">AICS-2026-00847</div>
-      <div class="sb-status"><div class="pulse-dot"></div>Protected · Pro Plan</div>
+      <div class="sb-status"><div class="pulse-dot"></div><span id="sbPlan">Protected · Pro Plan</span></div>
     </div>
     <div class="sb-section">
       <div class="sb-label">Overview</div>
-      <div class="sb-item active" onclick="navTo('dashTop',this)"><span class="sb-icon">◈</span>Dashboard</div>
-      <div class="sb-item" onclick="navTo('eventsCard',this)"><span class="sb-icon">⚡</span>Live Events</div>
-      <div class="sb-item" onclick="navTo('chartsRow',this)"><span class="sb-icon">📊</span>Analytics</div>
-      <div class="sb-item" onclick="navTo('revenueCard',this)"><span class="sb-icon">💰</span>Revenue</div>
+      <a class="sb-item active" href="#dashboard" data-route="dashboard"><span class="sb-icon">◈</span>Dashboard</a>
+      <a class="sb-item" href="#events" data-route="events"><span class="sb-icon">⚡</span>Live Events</a>
+      <a class="sb-item" href="#analytics" data-route="analytics"><span class="sb-icon">📊</span>Analytics</a>
+      <a class="sb-item" href="#revenue" data-route="revenue"><span class="sb-icon">💰</span>Revenue</a>
+      <a class="sb-item" href="#billing" data-route="billing"><span class="sb-icon">🧾</span>Invoices &amp; Payouts</a>
     </div>
     <div class="sb-section">
       <div class="sb-label">Protection</div>
-      <div class="sb-item" onclick="navTo('rulesCard',this)"><span class="sb-icon">🤖</span>Bot Rules</div>
-      <div class="sb-item" onclick="navTo('setupCard',this)"><span class="sb-icon">⊗</span>Badge Settings</div>
-      <div class="sb-item" onclick="window.open('ai.txt','_blank')"><span class="sb-icon">📋</span>Legal Docs</div>
-      <div class="sb-item" onclick="navTo('setupCard',this)"><span class="sb-icon">🔗</span>API Keys</div>
+      <a class="sb-item" href="#rules" data-route="rules"><span class="sb-icon">🤖</span>Bot Rules</a>
+      <a class="sb-item" href="#badge" data-route="badge"><span class="sb-icon">⊗</span>Badge Settings</a>
+      <a class="sb-item" href="#verify" data-route="verify"><span class="sb-icon">✓</span>Install Check</a>
+      <a class="sb-item" href="#legal-docs" data-route="legal-docs"><span class="sb-icon">📋</span>Legal Docs</a>
+      <a class="sb-item" href="#api-keys" data-route="api-keys"><span class="sb-icon">🔗</span>API Keys</a>
     </div>
     <div class="sb-section">
       <div class="sb-label">Account</div>
-      <div class="sb-item" onclick="navTo('setupCard',this)"><span class="sb-icon">⚙</span>Settings</div>
-      <div class="sb-item" onclick="showLanding()"><span class="sb-icon">←</span>Back to Site</div>
+      <a class="sb-item" href="#account" data-route="account"><span class="sb-icon">⚙</span>Settings</a>
+      <a class="sb-item" href="#home" data-route="home"><span class="sb-icon">←</span>Back to Site</a>
     </div>
   </aside>
 
@@ -610,11 +640,16 @@ table.ev-table tr:hover td{background:rgba(255,255,255,.02)}
         <div class="dash-date" id="dashDate">Loading...</div>
       </div>
       <div class="dash-actions">
-        <button class="btn-ghost" onclick="showLanding()">← Back to site</button>
+        <button class="btn-ghost" onclick="go('home')">← Back to site</button>
         <button class="btn-ghost" id="demoToggle" onclick="toggleDemo()">Demo traffic: on</button>
         <button class="btn-cyan" onclick="exportReport()">Export Report (CSV)</button>
       </div>
     </div>
+
+    <!-- Section tabs (phones/tablets, where the sidebar is hidden) -->
+    <nav class="dash-tabs" aria-label="Dashboard sections">
+      <a href="#dashboard" data-route="dashboard">Overview</a><a href="#events" data-route="events">Events</a><a href="#analytics" data-route="analytics">Analytics</a><a href="#revenue" data-route="revenue">Revenue</a><a href="#billing" data-route="billing">Billing</a><a href="#rules" data-route="rules">Bot rules</a><a href="#badge" data-route="badge">Badge</a><a href="#verify" data-route="verify">Install check</a><a href="#api-keys" data-route="api-keys">API keys</a><a href="#legal-docs" data-route="legal-docs">Legal</a><a href="#account" data-route="account">Account</a>
+    </nav>
 
     <!-- KPIs -->
     <div class="kpi-row">
@@ -733,13 +768,322 @@ table.ev-table tr:hover td{background:rgba(255,255,255,.02)}
         <div class="sim-row">
           <select id="simBot" aria-label="Crawler to simulate"></select>
           <button class="dl-btn" onclick="simulateCrawl()">Simulate crawl</button>
-          <button class="dl-btn" onclick="if(confirm('Clear all tracked events?'))AICS.clear()">Clear events</button>
+          <button class="dl-btn" id="clearBtn" onclick="clearEvents(this)">Clear events</button>
         </div>
+      </div>
+    </div>
+
+    <!-- INSTALL CHECK + API KEYS -->
+    <div class="setup-row">
+      <div class="table-card" id="verifyCard">
+        <div class="table-card-head">
+          <div class="table-card-title">Install Check</div>
+          <div class="badge-count" id="verifyBadge">not checked</div>
+        </div>
+        <div class="setup-body" data-verify="dash"></div>
+      </div>
+      <div class="table-card" id="keysCard">
+        <div class="table-card-head">
+          <div class="table-card-title">API Keys · Crawler Licences</div>
+          <div class="badge-count" id="keysCount">0 active</div>
+        </div>
+        <div class="setup-body">
+          <form class="inline-form" id="keyForm">
+            <div class="field"><label for="keyBot">Crawler</label><select id="keyBot"></select></div>
+            <div class="field"><label for="keyLabel">Licensee / note</label><input id="keyLabel" placeholder="e.g. Anthropic data licence 2026"></div>
+            <label class="chk"><input type="checkbox" id="keyLicense" checked> Add crawler to licensed list (billed, not blocked)</label>
+            <button class="btn-cyan" type="submit">Issue key</button>
+          </form>
+          <div class="list" id="keysList"></div>
+          <div class="dl-row">
+            <button class="dl-btn" onclick="AICSApp.showKeysSecret()">Edge worker secret</button>
+            <button class="dl-btn" onclick="go('docs');AICSApp.docsTo('doc-edge')">Edge setup guide</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- INVOICES & PAYOUTS -->
+    <div class="table-card wide-card" id="billingCard">
+      <div class="table-card-head">
+        <div class="table-card-title">Invoices &amp; Payouts</div>
+        <div class="head-actions">
+          <select id="billPeriod" aria-label="Billing period"></select>
+          <button class="dl-btn" onclick="AICSApp.generateInvoices()">Generate invoices</button>
+          <button class="dl-btn" onclick="AICSApp.exportInvoices()">Export CSV</button>
+        </div>
+      </div>
+      <div class="bill-kpis">
+        <div><div class="kpi-label">Drafts</div><div class="bill-val" id="bDraft">$0.00</div></div>
+        <div><div class="kpi-label">Outstanding (sent)</div><div class="bill-val amber-t" id="bOutstanding">$0.00</div></div>
+        <div><div class="kpi-label">Collected</div><div class="bill-val green-t" id="bCollected">$0.00</div></div>
+        <div><div class="kpi-label">Available to pay out</div><div class="bill-val cyan-t" id="bAvailable">$0.00</div></div>
+      </div>
+      <div class="table-scroll">
+        <table class="ev-table">
+          <thead><tr><th>Invoice</th><th>Vendor</th><th>Period</th><th>Total</th><th>Your share</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody id="invTable"></tbody>
+        </table>
+      </div>
+      <div class="sim-row">
+        <div class="payout-note" id="payoutNote">Payouts are scheduled for the 1st of each month.</div>
+        <button class="btn-cyan" id="payoutBtn" onclick="AICSApp.requestPayout()">Request payout</button>
+      </div>
+      <div class="list" id="payoutList"></div>
+    </div>
+
+    <!-- LEGAL DOCS + ACCOUNT -->
+    <div class="setup-row">
+      <div class="table-card" id="legalCard">
+        <div class="table-card-head">
+          <div class="table-card-title">Legal Documents</div>
+          <div class="badge-count">templates</div>
+        </div>
+        <div class="setup-body" data-legal="dash"></div>
+      </div>
+      <div class="table-card" id="accountCard">
+        <div class="table-card-head">
+          <div class="table-card-title">Account</div>
+          <div class="badge-count" id="acctPlanBadge">Pro</div>
+        </div>
+        <form class="setup-body" id="accountForm">
+          <div class="field-grid">
+            <div class="field"><label for="acctOwner">Copyright holder / domain</label><input id="acctOwner" required></div>
+            <div class="field"><label for="acctEmail">Billing email</label><input id="acctEmail" type="email" placeholder="you@example.com"></div>
+            <div class="field"><label for="acctPlan">Plan</label>
+              <select id="acctPlan"><option value="starter">Starter · $29/mo · 80%</option><option value="pro">Pro · $99/mo · 85%</option><option value="enterprise">Enterprise · custom · 85%</option></select></div>
+            <div class="field"><label for="acctPayout">Payout method</label>
+              <select id="acctPayout"><option value="">Not set</option><option value="stripe">Stripe Connect</option><option value="bank">Bank transfer (ACH/SEPA)</option><option value="paypal">PayPal</option></select></div>
+          </div>
+          <div class="field"><label for="acctPayoutRef">Payout account reference</label><input id="acctPayoutRef" placeholder="acct_… or last 4 digits"></div>
+          <div class="field"><label for="acctEndpoint">Event endpoint (optional)</label><input id="acctEndpoint" type="url" placeholder="https://example.com/aics/events"></div>
+          <div class="dl-row">
+            <button class="btn-cyan" type="submit">Save account</button>
+            <button class="dl-btn" type="button" onclick="AICSApp.exportData()">Export all data</button>
+            <button class="dl-btn" type="button" id="resetBtn" onclick="AICSApp.resetAll(this)">Reset workspace</button>
+            <span class="form-status" id="acctStatus" aria-live="polite"></span>
+          </div>
+        </form>
       </div>
     </div>
   </main>
 </div>
 </div><!-- /dashboard -->
+
+<!-- ════════════════════════════
+     PUBLIC PAGES (hash routed)
+════════════════════════════ -->
+<div class="page" id="view-get-started" hidden>
+  <div class="section">
+    <div class="sec-label">Get started</div>
+    <h2 class="sec-h2">PROTECT YOUR DOMAIN<br>IN THREE STEPS</h2>
+    <p class="sec-sub">Register your domain, install the shield, then confirm the install. Your dashboard starts tracking crawler hits as soon as the snippet is live.</p>
+    <ol class="wizard" id="wizardSteps">
+      <li data-step="1" class="on">Register</li><li data-step="2">Install</li><li data-step="3">Verify</li>
+    </ol>
+    <form class="panel" id="onboardForm" data-step-panel="1">
+      <div class="field-grid">
+        <div class="field"><label for="obDomain">Domain</label><input id="obDomain" required placeholder="yoursite.com" autocomplete="url"></div>
+        <div class="field"><label for="obOwner">Copyright holder</label><input id="obOwner" required placeholder="Your Company LLC"></div>
+        <div class="field"><label for="obEmail">Billing email</label><input id="obEmail" type="email" placeholder="you@yoursite.com"></div>
+        <div class="field"><label for="obPlan">Plan</label>
+          <select id="obPlan"><option value="starter">Starter · $29/mo · 80% share</option><option value="pro" selected>Pro · $99/mo · 85% share</option><option value="enterprise">Enterprise · custom · 85% share</option></select></div>
+        <div class="field"><label for="obRate">Rate (USD per token)</label><input id="obRate" type="number" step="0.0001" min="0" value="0.001"></div>
+        <div class="field"><label for="obMode">Mode</label>
+          <select id="obMode"><option value="meter-and-bill">Meter and bill licensed crawlers, block the rest</option><option value="block">Block all AI crawlers</option><option value="allow">Allow and meter every AI crawler</option></select></div>
+      </div>
+      <div class="field"><label for="obLicensed">Licensed crawlers (comma separated)</label><input id="obLicensed" placeholder="ClaudeBot,Google-Extended"></div>
+      <div class="dl-row"><button class="btn-large-cyan" type="submit">Register domain →</button><span class="form-status" id="obStatus" aria-live="polite"></span></div>
+    </form>
+    <div class="panel" data-step-panel="2" hidden>
+      <p class="panel-lead">Registered <b id="obIdOut"></b>. Paste this into the <code>&lt;head&gt;</code> of every page, then upload the policy files to your site root.</p>
+      <div class="code-box"><pre id="obSnippet"></pre></div>
+      <div class="dl-row">
+        <button class="dl-btn" onclick="copySnippet('obSnippet')">Copy snippet</button>
+        <button class="dl-btn" onclick="downloadFile('aics-snippet.html')">⬇ snippet.html</button>
+        <button class="dl-btn" onclick="downloadFile('robots.txt')">⬇ robots.txt</button>
+        <button class="dl-btn" onclick="downloadFile('ai.txt')">⬇ ai.txt</button>
+        <button class="dl-btn" onclick="downloadFile('llms.txt')">⬇ llms.txt</button>
+        <button class="dl-btn" onclick="downloadFile('.well-known/tdmrep.json')">⬇ tdmrep.json</button>
+        <button class="dl-btn" onclick="downloadFile('edge/worker.js')">⬇ edge worker</button>
+      </div>
+      <div class="dl-row"><button class="btn-ghost" onclick="AICSApp.wizard(1)">← Edit details</button><button class="btn-cyan" onclick="AICSApp.wizard(3)">I've installed it →</button></div>
+    </div>
+    <div class="panel" data-step-panel="3" hidden>
+      <div data-verify="wizard"></div>
+      <div class="dl-row"><button class="btn-ghost" onclick="AICSApp.wizard(2)">← Back to install</button><button class="btn-cyan" onclick="go('dashboard')">Open dashboard →</button></div>
+    </div>
+  </div>
+</div>
+
+<div class="page" id="view-registry" hidden>
+  <div class="section">
+    <div class="sec-label">AI Rights Registry</div>
+    <h2 class="sec-h2">LOOK UP A<br>PROTECTED DOMAIN</h2>
+    <p class="sec-sub">AI companies check the registry before crawling to see whether a domain reserves AI rights, the licence rate, and where the terms live.</p>
+    <form class="search-row" id="registryForm" role="search">
+      <label class="sr-only" for="registryQuery">Domain or licence ID</label>
+      <input id="registryQuery" placeholder="Search a domain or licence ID, e.g. lawfirm.com">
+      <button class="btn-cyan" type="submit">Search</button>
+    </form>
+    <div class="list registry-list" id="registryResults"></div>
+    <div class="dl-row"><button class="btn-ghost" onclick="startPlan('pro')">Register your domain →</button></div>
+  </div>
+</div>
+
+<div class="page" id="view-docs" hidden>
+  <div class="section docs-layout">
+    <nav class="docs-toc" aria-label="Documentation contents">
+      <div class="sb-label">Documentation</div>
+      <button data-doc="doc-quick">Quick start</button>
+      <button data-doc="doc-attrs">Embed options</button>
+      <button data-doc="doc-modes">Modes</button>
+      <button data-doc="doc-files">Policy files</button>
+      <button data-doc="doc-edge">Edge enforcement</button>
+      <button data-doc="doc-keys">Licence keys</button>
+      <button data-doc="doc-events">Event schema</button>
+      <button data-doc="doc-billing">Billing &amp; payouts</button>
+      <button data-doc="doc-api">JavaScript API</button>
+      <button data-doc="doc-limits">Limits</button>
+    </nav>
+    <article class="docs-body">
+      <div class="sec-label">Docs</div>
+      <h2 class="sec-h2" id="doc-quick">QUICK START</h2>
+      <ol>
+        <li><a href="#get-started">Register your domain</a> to get a licence ID.</li>
+        <li>Paste the generated snippet into the <code>&lt;head&gt;</code> of every page.</li>
+        <li>Upload <code>robots.txt</code>, <code>ai.txt</code>, <code>llms.txt</code> and <code>.well-known/tdmrep.json</code> to your site root.</li>
+        <li>Deploy the edge worker in front of your site to block and bill crawlers that never run JavaScript.</li>
+        <li>Run the <a href="#verify">install check</a>, then watch <a href="#events">live events</a>.</li>
+      </ol>
+      <h3 id="doc-attrs">Embed options</h3>
+      <div class="table-scroll"><table class="doc-table">
+        <thead><tr><th>Attribute</th><th>Default</th><th>Meaning</th></tr></thead>
+        <tbody>
+          <tr><td><code>data-id</code></td><td>AICS-UNREGISTERED</td><td>Your licence ID from the registry</td></tr>
+          <tr><td><code>data-owner</code></td><td>hostname</td><td>Copyright holder shown in the watermark</td></tr>
+          <tr><td><code>data-mode</code></td><td>meter-and-bill</td><td><code>block</code>, <code>meter-and-bill</code> or <code>allow</code></td></tr>
+          <tr><td><code>data-rate</code></td><td>0.001</td><td>USD charged per token delivered</td></tr>
+          <tr><td><code>data-share</code></td><td>0.85</td><td>Your share of collected fees</td></tr>
+          <tr><td><code>data-licensed</code></td><td>(none)</td><td>Comma-separated crawlers or vendors that hold a licence</td></tr>
+          <tr><td><code>data-terms</code></td><td>/ai.txt</td><td>Where your AI licence terms live</td></tr>
+          <tr><td><code>data-endpoint</code></td><td>(none)</td><td>URL that receives each event via <code>sendBeacon</code></td></tr>
+          <tr><td><code>data-position</code></td><td>inline</td><td><code>inline</code> watermark at the page bottom, or <code>fixed</code> bar</td></tr>
+          <tr><td><code>data-badge</code></td><td>true</td><td><code>false</code> hides the watermark but keeps tracking</td></tr>
+          <tr><td><code>data-sw</code></td><td>(none)</td><td>Service worker path that caches the shield and policy files</td></tr>
+        </tbody>
+      </table></div>
+      <h3 id="doc-modes">Modes</h3>
+      <ul>
+        <li><b>meter-and-bill</b>: crawlers in <code>data-licensed</code> are served and billed per token; every other AI crawler is blocked and its attempt is invoiced.</li>
+        <li><b>block</b>: every AI crawler gets the 402 licence notice.</li>
+        <li><b>allow</b>: every AI crawler is served and metered.</li>
+      </ul>
+      <p>Unidentified headless clients are logged as <span class="status-pill pending">Pending</span> until you classify them.</p>
+      <h3 id="doc-files">Policy files</h3>
+      <p><code>robots.txt</code> disallows about 30 AI crawlers while keeping search engines and the policy files reachable. <code>ai.txt</code> and <code>llms.txt</code> state the licence terms in plain language for AI systems. <code>tdmrep.json</code> declares the EU text-and-data-mining reservation. Open any of them from the <a href="#install">install section</a>.</p>
+      <h3 id="doc-edge">Edge enforcement</h3>
+      <p><code>edge/worker.js</code> is a Cloudflare Worker that runs in front of your origin:</p>
+      <ul>
+        <li>Unlicensed AI crawler → <code>402 Payment Required</code> with the terms, logged as blocked.</li>
+        <li>Licensed crawler (valid <code>Authorization: AICS-License &lt;key&gt;</code>) → origin response with <code>AICS-Tokens-Metered</code> and <code>AICS-Charge-USD</code> headers, logged as billed.</li>
+        <li>Everyone else → origin response plus <code>X-Robots-Tag: noai</code> and TDM headers.</li>
+        <li><code>POST /aics/events</code> ingests shield events; <code>GET /aics/events</code> returns them with the admin token.</li>
+      </ul>
+      <div class="code-box"><pre>cp edge/wrangler.toml.example edge/wrangler.toml
+wrangler secret put AICS_LICENSE_KEYS   # from Dashboard → API Keys → Edge worker secret
+wrangler secret put AICS_ADMIN_TOKEN
+wrangler deploy</pre></div>
+      <h3 id="doc-keys">Licence keys</h3>
+      <p>Issue one key per licensed crawler in <a href="#api-keys">API Keys</a>. Revoking a key takes effect after you update the worker secret. The crawler sends the key on every request; the worker meters what it delivers.</p>
+      <h3 id="doc-events">Event schema</h3>
+      <div class="code-box"><pre>{ "id": "ev_…", "ts": 1762819200000, "licenseId": "AICS-2026-00847",
+  "domain": "yoursite.com", "url": "/article", "bot": "GPTBot", "vendor": "OpenAI",
+  "status": "blocked | billed | pending | human", "pages": 1, "tokens": 1840,
+  "amount": 1.84, "ownerAmount": 1.56 }</pre></div>
+      <h3 id="doc-billing">Billing &amp; payouts</h3>
+      <ul>
+        <li>Charge per event: <code>tokens × rate</code>. Your share: <code>charge × share</code> (80% Starter, 85% Pro and Enterprise).</li>
+        <li><a href="#billing">Generate invoices</a> once per period: one per AI vendor, with separate lines for licensed access and blocked attempts.</li>
+        <li>Invoices move <span class="status-pill pending">Draft</span> → <span class="status-pill billed">Sent</span> → <span class="status-pill billed">Paid</span>. Only paid invoices count toward your payout balance.</li>
+        <li>Payouts are scheduled for the 1st of the next month to the method set in <a href="#account">Account</a>.</li>
+      </ul>
+      <h3 id="doc-api">JavaScript API</h3>
+      <div class="code-box"><pre>AICS.events()            // all tracked events
+AICS.stats(list?)        // totals by status, bot and day
+AICS.on(fn)              // subscribe to new events (same-origin tabs too)
+AICS.simulate("GPTBot")  // log a test crawl
+AICS.toCSV()             // event export
+AICS.snippet({...})      // embed snippet for a config
+AICS.detect(ua?)         // crawler match for a user agent</pre></div>
+      <h3 id="doc-limits">Limits</h3>
+      <p>robots.txt, ai.txt and meta tags are signals that compliant crawlers follow. The shield script only sees crawlers that run JavaScript, so use the edge worker for enforcement. In this build, events, invoices and payouts are stored in your browser; connect an event endpoint in <a href="#account">Account</a> to collect them on a server.</p>
+    </article>
+  </div>
+</div>
+
+<div class="page" id="view-legal" hidden>
+  <div class="section">
+    <div class="sec-label">Legal layer</div>
+    <h2 class="sec-h2">RESERVE YOUR RIGHTS.<br>DOCUMENT EVERY HIT.</h2>
+    <p class="sec-sub">AICS publishes your reservation in every machine-readable form crawlers check, keeps an audit log of each access, and drafts the documents you need to license or pursue unlicensed use.</p>
+    <div class="steps-grid legal-grid">
+      <div class="step-card"><div class="step-title">Machine-readable reservation</div><div class="step-body">robots.txt, ai.txt, llms.txt, TDMRep, <code>noai</code> meta tags and <code>X-Robots-Tag</code> headers. <a href="#install">Get the files</a></div></div>
+      <div class="step-card"><div class="step-title">Audit log</div><div class="step-body">Each crawler hit is recorded with identity, pages and token count. <a href="#events">See live events</a></div></div>
+      <div class="step-card"><div class="step-title">Licensing</div><div class="step-body">Per-crawler keys, per-token metering and monthly invoices. <a href="#api-keys">Issue a key</a></div></div>
+      <div class="step-card"><div class="step-title">Enforcement</div><div class="step-body">Notices of unlicensed use built from your logs. <a href="#legal-docs">Draft a notice</a></div></div>
+    </div>
+    <div class="panel" data-legal="page"></div>
+  </div>
+</div>
+
+<div class="page" id="view-contact" hidden>
+  <div class="section">
+    <div class="sec-label">Enterprise</div>
+    <h2 class="sec-h2">TALK TO SALES</h2>
+    <p class="sec-sub">Custom rate cards, unlimited pages, counsel integration and white-label badges for media companies, publishers and law firms.</p>
+    <form class="panel" id="contactForm">
+      <div class="field-grid">
+        <div class="field"><label for="ctName">Name</label><input id="ctName" required autocomplete="name"></div>
+        <div class="field"><label for="ctCompany">Company</label><input id="ctCompany" required autocomplete="organization"></div>
+        <div class="field"><label for="ctEmail">Work email</label><input id="ctEmail" type="email" required autocomplete="email"></div>
+        <div class="field"><label for="ctPages">Pages to protect</label>
+          <select id="ctPages"><option>10k – 100k</option><option>100k – 1M</option><option>1M+</option></select></div>
+      </div>
+      <div class="field"><label for="ctMsg">What do you need?</label><textarea id="ctMsg" rows="4" placeholder="Domains, crawlers you want to license, legal requirements…"></textarea></div>
+      <div class="dl-row"><button class="btn-large-cyan" type="submit">Send request</button></div>
+    </form>
+    <div class="panel" id="contactDone" hidden>
+      <p class="panel-lead"><b>Request recorded.</b> It is saved in this workspace and, if you set an event endpoint in Account, posted there too. Copy it to send by email:</p>
+      <div class="code-box"><pre id="contactSummary"></pre></div>
+      <div class="dl-row"><button class="dl-btn" onclick="AICSApp.copyText(document.getElementById('contactSummary').textContent,this)">Copy request</button><button class="btn-ghost" onclick="AICSApp.newContact()">New request</button><button class="btn-cyan" onclick="go('home')">Back to site</button></div>
+    </div>
+  </div>
+</div>
+
+<div class="page" id="view-not-found" hidden>
+  <div class="section">
+    <div class="sec-label">404</div>
+    <h2 class="sec-h2">PAGE NOT FOUND</h2>
+    <p class="sec-sub">That link doesn't match a page in the app.</p>
+    <div class="dl-row"><button class="btn-cyan" onclick="go('home')">Go to home</button><button class="btn-ghost" onclick="go('dashboard')">Open dashboard</button></div>
+  </div>
+</div>
+
+<div class="fv-backdrop" id="fileViewer" hidden onclick="if(event.target===this)closeFile()">
+  <div class="fv" role="dialog" aria-modal="true" aria-labelledby="fvName">
+    <div class="fv-head">
+      <div class="fv-name" id="fvName">file</div>
+      <div class="fv-status" id="fvStatus" aria-live="polite"></div>
+      <div class="fv-actions">
+        <button class="dl-btn" onclick="copyFile()">Copy</button>
+        <button class="dl-btn" onclick="saveFile()">Download</button>
+        <button class="dl-btn" onclick="closeFile()" aria-label="Close">✕</button>
+      </div>
+    </div>
+    <pre id="fvBody"></pre>
+  </div>
+</div>
 
 <script src="shield/shield.js"
         data-id="AICS-2026-00847"
@@ -893,22 +1237,41 @@ function renderSnippets(){
 function copySnippet(id){
   const text=currentSnippet();
   const done=()=>{const el=document.getElementById(id||'landingSnippet');if(!el)return;const o=el.style.borderColor;el.parentNode.style.borderColor='var(--green)';setTimeout(()=>el.parentNode.style.borderColor=o,900)};
-  if(navigator.clipboard)navigator.clipboard.writeText(text).then(done,()=>AICS.download('aics-snippet.html',text,'text/html'));
-  else AICS.download('aics-snippet.html',text,'text/html');
+  const sel=()=>{const el=document.getElementById(id||'landingSnippet');if(!el)return;const r=document.createRange();r.selectNodeContents(el);getSelection().removeAllRanges();getSelection().addRange(r)};
+  if(navigator.clipboard)navigator.clipboard.writeText(text).then(done,sel);else sel();
 }
+let fvFile={name:'',text:'',type:'text/plain'};
 async function downloadFile(path){
-  if(path==='aics-snippet.html')return AICS.download('aics-snippet.html',currentSnippet(),'text/html');
-  const name=path.split('/').pop();
-  try{
-    const res=await fetch(path,{cache:'no-cache'});
-    if(!res.ok)throw new Error(res.status);
-    let text=await res.text();
-    if(name==='robots.txt'||name==='ai.txt'||name==='llms.txt')text=text.replace(/AICS-2026-00847/g,AICS.config.id).replace(/0\.001 USD/g,AICS.config.rate+' USD');
-    AICS.download(name,text);
-  }catch(e){
-    // file:// pages cannot fetch siblings; fall back to opening the file
-    window.open(path,'_blank');
+  let name=path.split('/').pop(),text,type='text/plain';
+  if(path==='aics-snippet.html'){text=currentSnippet();type='text/html'}
+  else{
+    try{
+      const res=await fetch(path,{cache:'no-cache'});
+      if(!res.ok)throw new Error('HTTP '+res.status);
+      text=await res.text();
+      if(/^(robots|ai|llms)\.txt$/.test(name))text=text.replace(/AICS-2026-00847/g,AICS.config.id).replace(/0\.001 USD/g,AICS.config.rate+' USD');
+      if(name.endsWith('.js'))type='text/javascript';else if(name.endsWith('.json'))type='application/json';
+    }catch(e){text='Could not load '+path+' ('+e.message+'). Serve the site over http(s) to view this file.'}
   }
+  fvFile={name,text,type};
+  document.getElementById('fvName').textContent=path;
+  document.getElementById('fvBody').textContent=text;
+  document.getElementById('fvStatus').textContent='';
+  document.getElementById('fileViewer').hidden=false;
+}
+function closeFile(){document.getElementById('fileViewer').hidden=true}
+function saveFile(){AICS.download(fvFile.name,fvFile.text,fvFile.type);document.getElementById('fvStatus').textContent='Download started'}
+function copyFile(){
+  const st=document.getElementById('fvStatus');
+  const fallback=()=>{const r=document.createRange();r.selectNodeContents(document.getElementById('fvBody'));const sel=getSelection();sel.removeAllRanges();sel.addRange(r);st.textContent='Selected · press Ctrl/⌘+C'};
+  if(navigator.clipboard)navigator.clipboard.writeText(fvFile.text).then(()=>st.textContent='Copied',fallback);else fallback();
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeFile()});
+let clearArmed=null;
+function clearEvents(btn){
+  if(clearArmed){clearTimeout(clearArmed);clearArmed=null;AICS.clear();btn.textContent='Cleared';setTimeout(()=>btn.textContent='Clear events',1500);return}
+  btn.textContent='Click again to clear';
+  clearArmed=setTimeout(()=>{clearArmed=null;btn.textContent='Clear events'},3000);
 }
 
 /* ── Landing live feed (latest crawler events) ── */
@@ -1105,5 +1468,9 @@ setInterval(()=>{
 },4000);
 setInterval(renderLandingFeed,15000);
 </script>
+<script src="app/store.js"></script>
+<script src="app/billing.js"></script>
+<script src="app/legal.js"></script>
+<script src="app/app.js"></script>
 </body>
 </html>
