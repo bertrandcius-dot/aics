@@ -1,0 +1,5 @@
+{
+  "name": "AI Copyright Shield",
+  "description": "Metered licensing infrastructure for AI training data — detect LLM crawlers, meter tokens, and protect website content.",
+  "requestFramePermissions": []
+}
