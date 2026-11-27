@@ -1,1 +1,8 @@
 dist/
+node_modules/
+.env
+.env.*
+edge/.dev.vars
+edge/.wrangler/
+supabase/.temp/
+supabase/functions/**/.env

@@ -1,0 +1,28 @@
+# Cloudflare Worker: AICS edge enforcement (edge/worker.js).
+# Deploy from this folder:  npx wrangler deploy
+# (or let .github/workflows/deploy-worker.yml deploy on every push to main).
+name = "aics"
+main = "worker.js"
+compatibility_date = "2026-01-01"
+
+# Put the worker in front of your site once the domain is on Cloudflare, e.g.:
+# routes = [{ pattern = "yoursite.com/*", zone_name = "yoursite.com" }]
+workers_dev = true
+
+[vars]
+AICS_ID = "AICS-2026-00847"
+AICS_OWNER = "AI Copyright Shield Inc."
+AICS_RATE = "0.001"
+AICS_SHARE = "0.85"
+
+# Event log (created Nov 27 2026, namespace "aics-events").
+[[kv_namespaces]]
+binding = "AICS_EVENTS"
+id = "22b55b32d66d4ff0822006345d69dd0f"
+
+[observability]
+enabled = true
+
+# Secrets — never commit these. Set them with:
+#   npx wrangler secret put AICS_LICENSE_KEYS   e.g. "k_live_abc:ClaudeBot,k_live_def:GPTBot"
+#   npx wrangler secret put AICS_ADMIN_TOKEN    bearer token for GET /aics/events
