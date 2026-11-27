@@ -104,7 +104,7 @@ tables are protected by row-level security. Never commit a service-role key, Hub
 2. **Supabase Auth → Passwords**: turn on leaked-password protection.
 3. **HubSpot**: create a private app with `crm.objects.contacts.write` and `crm.objects.notes.write`, then
    `supabase secrets set HUBSPOT_ACCESS_TOKEN=...` (optional: `RESEND_API_KEY`, `CRM_FROM_EMAIL`).
-4. **Schedule the sync** (every 5 minutes) with pg_cron + pg_net or any scheduler:
+4. **Sync schedule**: done by migration `20261127223000_crm_sync_schedule` (pg_cron runs crm-sync every 5 minutes, authenticated by a Vault-generated secret). To run it by hand:
    `POST https://bsabcachyqtxobocgeiu.supabase.co/functions/v1/crm-sync` with `Authorization: Bearer <service role key>`.
 5. **Cloudflare**: add `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` as GitHub Actions secrets, and set the
    worker secrets with `npx wrangler secret put AICS_LICENSE_KEYS` / `AICS_ADMIN_TOKEN`.
