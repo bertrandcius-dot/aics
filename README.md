@@ -1,1 +1,110 @@
-# aics
+# aics — ⊗ AI Copyright Shield
+
+Detect AI crawlers, block or meter them per token, and show a copyright watermark at the bottom of every page.
+
+## Files
+
+| File | Purpose |
+| --- | --- |
+| `index.html` | Landing page + live dashboard (KPIs, charts, events, revenue, bot rules, snippet generator, downloads) |
+| `shield/shield.js` | Embeddable script: watermark badge, `noai`/TDM meta tags, JSON-LD licence, AI-crawler detection, token metering, event tracker |
+| `robots.txt` | Blocks ~30 AI training/retrieval crawlers, allows search engines and the policy files |
+| `ai.txt`, `llms.txt` | Licence terms written for AI systems (what is reserved, rate, how to authenticate) |
+| `.well-known/tdmrep.json` | W3C TDMRep / EU DSM Art. 4 text-and-data-mining reservation |
+| `sw.js` | Service worker that caches the shield and policy files (stale-while-revalidate) |
+| `_headers` | `X-Robots-Tag: noai`, TDM and cache headers for Netlify / Cloudflare Pages |
+| `edge/worker.js` | Cloudflare Worker: 402 for unlicensed AI crawlers, per-token billing for licensed ones, event ingest |
+| `app/app.js` | Hash router and workflow features: onboarding, registry, install check, API keys, invoices & payouts, legal docs, account, contact |
+| `app/billing.js` | Pure invoicing and payout logic (browser + Node) |
+| `app/legal.js` | ToS AI addendum and unlicensed-use notice templates |
+| `app/store.js` | Persisted workspace state (account, keys, invoices, payouts, requests) |
+| `app/app.css` | Styles for routed pages and dashboard panels |
+| `tests/` | Unit tests (`npm test`) and end-to-end workflow + accounts check (`npm run e2e`) |
+| `app/auth.js` | Sign up, sign in, password reset, sign out; saves registered domains to the owner account |
+
+## Pages and routes
+
+Every button and link routes to a page or section, and each has a shareable hash link.
+
+| Area | Routes |
+| --- | --- |
+| Landing | `#home` `#how` `#compare` `#pricing` `#install` |
+| Public pages | `#get-started` `#registry` `#docs` `#legal` `#contact` |
+| Dashboard | `#dashboard` `#events` `#analytics` `#revenue` `#billing` `#rules` `#badge` `#verify` `#api-keys` `#legal-docs` `#account` |
+
+## Workflow
+
+1. **Get started**: register a domain, receive a licence ID, pick plan, rate, mode and licensed crawlers.
+2. **Install**: copy the generated snippet and policy files.
+3. **Verify**: the install check tests page source and robots.txt (paste, URL, or this app).
+4. **License**: issue a key per paying crawler in API Keys; export the edge worker secret.
+5. **Track**: crawler hits appear in Live Events, Analytics and Revenue.
+6. **Bill**: generate monthly invoices per AI vendor, send them, mark them paid.
+7. **Get paid**: request a payout of your share to the method saved in Account.
+8. **Enforce**: generate a ToS AI addendum or an unlicensed-use notice from your logs.
+
+## Embed
+
+```html
+<script src="https://YOUR-HOST/shield/shield.js"
+        data-id="AICS-2026-00847" data-owner="YourSite.com"
+        data-mode="meter-and-bill" data-rate="0.001"
+        data-licensed="ClaudeBot,Google-Extended"
+        data-terms="/ai.txt" defer></script>
+```
+
+Upload `robots.txt`, `ai.txt`, `llms.txt` and `.well-known/tdmrep.json` to your site root. The dashboard's
+**Shield Setup** panel generates the snippet (including a static footer fallback) for your own licence ID and rate.
+
+Modes: `block` (all AI crawlers blocked), `meter-and-bill` (crawlers in `data-licensed` are billed, others blocked
+and invoiced), `allow` (everything metered and billed).
+
+## Event tracking and billing
+
+Every page view and crawler hit becomes an event `{bot, vendor, status, pages, tokens, amount, ownerAmount, …}`.
+Tokens are estimated as characters / 4; `amount = tokens × rate`, `ownerAmount = amount × share` (default 85%).
+Events are stored in `localStorage`, broadcast to open dashboards via `BroadcastChannel`, and sent with
+`sendBeacon` to `data-endpoint` if set (e.g. the edge worker's `POST /aics/events`).
+
+JS API: `AICS.events()`, `AICS.stats()`, `AICS.toCSV()`, `AICS.simulate(bot)`, `AICS.on(fn)`, `AICS.snippet()`.
+
+## Limits
+
+robots.txt, ai.txt and meta tags are signals that compliant crawlers honour; they do not technically stop
+crawlers that ignore them. `shield.js` only sees crawlers that execute JavaScript. Use `edge/worker.js` (or
+equivalent server middleware) to enforce blocking and billing on raw HTML requests. Dashboard data in this
+repo is local to the browser and includes simulated demo traffic (toggle with **Demo traffic**).
+
+## Review build
+
+```bash
+python3 tools/build_review.py dist/review
+```
+
+Produces a bundle of the app for sandboxed preview hosts (for example a claude.ai Artifact): the document
+skeleton is stripped, the service worker is not registered, and the shield and policy files are copied alongside.
+
+## Accounts and backend
+
+| Piece | Where | Notes |
+| --- | --- | --- |
+| Owner accounts | `app/auth.js`, `app/config.js` | Supabase Auth, email + password: `#signup`, `#signin`, `#forgot-password`, `#update-password`. The dashboard and `#get-started` require sign-in. Registering a domain saves it to `public.sites` for the signed-in owner. |
+| Database schema | `supabase/migrations/` | The four migrations applied to project `aics-base`. Change the schema by adding a new migration file here, never by editing the database by hand. |
+| HubSpot sync | `supabase/functions/crm-sync/` | Drains `crm_outbox` → upserts HubSpot contact → logs a note → optional Resend email. Needs the `HUBSPOT_ACCESS_TOKEN` secret. |
+| Edge worker | `edge/worker.js`, `edge/wrangler.toml` | Deployed as Worker `aics` with KV namespace `aics-events`. `.github/workflows/deploy-worker.yml` deploys on push to `main`. |
+| Web server | `server.mjs` | `npm start` serves the app and policy files with the rights headers. |
+
+`app/config.js` holds only the Supabase project URL and the **publishable** key; both are public by design and all
+tables are protected by row-level security. Never commit a service-role key, HubSpot token or Cloudflare token.
+
+### One-time setup
+
+1. **Supabase Auth → URL configuration**: set the Site URL to your deployed domain and add it (plus
+   `http://localhost:3000`) to the redirect allow list, or confirmation and reset links will not return to the app.
+2. **Supabase Auth → Passwords**: turn on leaked-password protection.
+3. **HubSpot**: create a private app with `crm.objects.contacts.write` and `crm.objects.notes.write`, then
+   `supabase secrets set HUBSPOT_ACCESS_TOKEN=...` (optional: `RESEND_API_KEY`, `CRM_FROM_EMAIL`).
+4. **Schedule the sync** (every 5 minutes) with pg_cron + pg_net or any scheduler:
+   `POST https://bsabcachyqtxobocgeiu.supabase.co/functions/v1/crm-sync` with `Authorization: Bearer <service role key>`.
+5. **Cloudflare**: add `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` as GitHub Actions secrets, and set the
+   worker secrets with `npx wrangler secret put AICS_LICENSE_KEYS` / `AICS_ADMIN_TOKEN`.

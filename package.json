@@ -1,13 +1,16 @@
 {
   "name": "aics",
-  "version": "1.0.0",
+  "version": "2.2.0",
   "private": true,
-  "type": "module",
+  "description": "AI Copyright Shield: copyright watermark, AI crawler blocking, token metering, billing and owner accounts",
   "scripts": {
-    "dev": "node server.js",
-    "start": "node server.js",
-    "build": "node --check server.js",
-    "lint": "node --check server.js"
+    "dev": "node server.mjs",
+    "start": "node server.mjs",
+    "build": "node --check server.mjs && node --check app/auth.js && node --check app/app.js",
+    "lint": "node --check server.mjs",
+    "test": "node --test tests/*.test.js",
+    "e2e": "node tests/e2e.js",
+    "build:review": "python3 tools/build_review.py dist/review"
   },
   "dependencies": {
     "express": "^4.21.2"

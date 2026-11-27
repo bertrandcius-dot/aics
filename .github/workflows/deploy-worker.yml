@@ -1,0 +1,21 @@
+name: Deploy edge worker
+on:
+  push:
+    branches: [main]
+    paths: ['edge/**']
+  workflow_dispatch:
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check for Cloudflare credentials
+        id: creds
+        env: { CF_TOKEN: '${{ secrets.CLOUDFLARE_API_TOKEN }}' }
+        run: if [ -n "$CF_TOKEN" ]; then echo "ok=true" >> "$GITHUB_OUTPUT"; else echo "::warning::CLOUDFLARE_API_TOKEN secret not set; skipping deploy"; fi
+      - uses: cloudflare/wrangler-action@v3
+        if: steps.creds.outputs.ok == 'true'
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          workingDirectory: edge

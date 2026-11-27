@@ -64,14 +64,16 @@
   };
   var PAGES = {
     'get-started': 'view-get-started', registry: 'view-registry', docs: 'view-docs',
-    legal: 'view-legal', contact: 'view-contact'
+    legal: 'view-legal', contact: 'view-contact',
+    signin: 'view-auth', signup: 'view-auth', 'forgot-password': 'view-auth', 'update-password': 'view-auth', 'check-email': 'view-auth'
   };
   var TITLES = {
     home: 'Home', how: 'How it works', compare: 'Compare', pricing: 'Pricing', install: 'Install',
     dashboard: 'Dashboard', events: 'Live events', analytics: 'Analytics', revenue: 'Revenue',
     billing: 'Invoices & payouts', rules: 'Bot rules', badge: 'Badge settings', verify: 'Install check',
     'api-keys': 'API keys', 'legal-docs': 'Legal documents', account: 'Account',
-    'get-started': 'Get started', registry: 'Registry', docs: 'Docs', legal: 'Legal', contact: 'Contact sales'
+    'get-started': 'Get started', registry: 'Registry', docs: 'Docs', legal: 'Legal', contact: 'Contact sales',
+    signin: 'Sign in', signup: 'Create account', 'forgot-password': 'Reset password', 'update-password': 'New password', 'check-email': 'Confirm your email'
   };
   var BASE_TITLE = d.title.split(' — ')[0].split(' · ')[0];
   var currentView = null;
@@ -108,8 +110,17 @@
     if (tab && tab.scrollIntoView) tab.scrollIntoView({ block: 'nearest', inline: 'center' });
   }
 
+  /** Owner-only areas: the dashboard and onboarding need a signed-in account when accounts are enabled. */
+  function gated(route) { return route in DASH || route === 'get-started'; }
+
   function render(route) {
     var prev = currentView;
+    var Au = w.AICSAuth;
+    if (gated(route) && Au && !Au.allows()) {
+      Au.requireFor(route);
+      route = Au.state() === 'offline' || Au.state() === 'loading' ? 'signin' : (route === 'get-started' ? 'signup' : 'signin');
+      if (history.replaceState) history.replaceState(null, '', '#' + route);
+    }
     if (route in LANDING) {
       showOnly('landing'); currentView = 'landing';
       if (LANDING[route]) setTimeout(function () { scrollToEl($(LANDING[route]), prev === 'landing'); }, 0);
@@ -599,6 +610,11 @@
       licensed: $('obLicensed').value.split(',').map(function (x) { return x.trim().toLowerCase(); }).filter(Boolean)
     });
     wizard(2);
+    // Signed-in owners: also save the domain to their account (public.sites, RLS-scoped to the owner).
+    if (w.AICSAuth) w.AICSAuth.registerSite(domain).then(function (r) {
+      if (!r.skipped) { var el = $('obSync'); el.textContent = r.message; el.classList.toggle('err', !r.ok); }
+      acct.synced = !!r.ok; S.set('account', acct);
+    });
   }
 
   /* ═══════════════ REGISTRY ═══════════════ */
@@ -671,6 +687,11 @@
   /* ═══════════════ WIRING ═══════════════ */
   var PAGE_RENDER = {
     'get-started': renderOnboarding,
+    signin: function () { w.AICSAuth.show('signin'); },
+    signup: function () { w.AICSAuth.show('signup'); },
+    'forgot-password': function () { w.AICSAuth.show('forgot-password'); },
+    'update-password': function () { w.AICSAuth.show('update-password'); },
+    'check-email': function () { w.AICSAuth.show('check-email'); },
     registry: function () { renderRegistry(); },
     legal: renderLegalVendors
   };

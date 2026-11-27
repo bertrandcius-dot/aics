@@ -1,7 +1,7 @@
 /* ⊗ AI Copyright Shield — service worker
  * Caches the shield script and policy files (stale-while-revalidate) so the
  * watermark and licence notice are available instantly and offline. */
-const CACHE = 'aics-shield-v2';
+const CACHE = 'aics-shield-v3';
 const ASSETS = [
   './',
   './index.html',

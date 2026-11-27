@@ -19,6 +19,7 @@ FILES = [
     "shield/shield.js", "robots.txt", "ai.txt", "llms.txt",
     ".well-known/tdmrep.json", "sw.js", "_headers", "edge/worker.js",
     "app/app.css", "app/store.js", "app/billing.js", "app/legal.js", "app/app.js",
+    "app/config.js", "app/auth.js",
 ]
 
 
