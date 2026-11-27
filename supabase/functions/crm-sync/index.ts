@@ -101,16 +101,24 @@ async function sendEmail(r: Row, key: string, from: string): Promise<string> {
 
 Deno.serve(async (req) => {
   if (req.method !== "POST") return new Response("method not allowed", { status: 405 });
-  if (!isServiceRole(req)) return new Response("forbidden", { status: 403 });
-
-  const token = Deno.env.get("HUBSPOT_ACCESS_TOKEN");
-  if (!token) return Response.json({ error: "HUBSPOT_ACCESS_TOKEN is not set" }, { status: 503 });
-  const resendKey = Deno.env.get("RESEND_API_KEY");
-  const from = Deno.env.get("CRM_FROM_EMAIL") ?? "AICS <onboarding@resend.dev>";
-
   const db = createClient(Deno.env.get("SUPABASE_URL")!, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!, {
     auth: { persistSession: false },
   });
+
+  // Allowed callers: the service role, or the pg_cron job presenting the Vault-held secret.
+  let allowed = isServiceRole(req);
+  const cronSecret = req.headers.get("x-aics-cron");
+  if (!allowed && cronSecret) {
+    const { data } = await db.rpc("aics_crm_check_cron_secret", { p_secret: cronSecret });
+    allowed = data === true;
+  }
+  if (!allowed) return new Response("forbidden", { status: 403 });
+
+  const token = Deno.env.get("HUBSPOT_ACCESS_TOKEN");
+  // Without a token, leave the queue untouched (rows stay pending) until the secret is set.
+  if (!token) return Response.json({ error: "HUBSPOT_ACCESS_TOKEN is not set" }, { status: 503 });
+  const resendKey = Deno.env.get("RESEND_API_KEY");
+  const from = Deno.env.get("CRM_FROM_EMAIL") ?? "AICS <onboarding@resend.dev>";
 
   const { data: rows, error } = await db.rpc("aics_crm_claim", { p_limit: 25 });
   if (error) return Response.json({ error: error.message }, { status: 500 });
